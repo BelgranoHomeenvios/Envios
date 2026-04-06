@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calculá tu envío – Belgrano Home</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
+  .card { background: #fff; border-radius: 16px; padding: 2rem; max-width: 620px; width: 100%; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .bh-header { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 1.75rem; text-align: center; }
+  .bh-logo { font-size: 24px; font-weight: 600; color: #111; letter-spacing: -0.5px; display: block; }
+  .bh-title { font-size: 13px; font-weight: 400; color: #999; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+  .bh-sub { font-size: 13px; color: #888; margin-top: 2px; }
+  .zone-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+  .zone-tab { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #888; font-size: 13px; cursor: pointer; text-align: center; transition: all 0.15s; }
+  .zone-tab:hover { border-color: #aaa; color: #333; }
+  .zone-tab.active { border: 2px solid #111; color: #111; font-weight: 600; }
+  .field-block { margin-bottom: 1.25rem; }
+  .field-label { font-size: 13px; color: #666; margin-bottom: 6px; display: block; font-weight: 500; }
+  .field-hint { font-size: 12px; color: #aaa; margin-top: 5px; }
+  .search-wrap { position: relative; }
+  .search-wrap input[type=text] { width: 100%; padding: 11px 14px; font-size: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; transition: border 0.15s; }
+  .search-wrap input[type=text]:focus { border-color: #111; }
+  .dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #ddd; border-radius: 8px; margin-top: 4px; max-height: 220px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .dropdown.open { display: block; }
+  .drop-item { padding: 10px 14px; font-size: 14px; cursor: pointer; color: #111; display: flex; justify-content: space-between; align-items: center; }
+  .drop-item:hover { background: #f5f5f3; }
+  .drop-price { font-size: 13px; color: #888; }
+  .qty-row { display: flex; align-items: center; gap: 14px; }
+  .qty-btn { width: 38px; height: 38px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; line-height: 1; }
+  .qty-btn:hover { background: #f5f5f3; }
+  .qty-num { font-size: 20px; font-weight: 600; min-width: 24px; text-align: center; color: #111; }
+  .radio-group { display: flex; flex-direction: column; gap: 8px; }
+  .radio-option { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; background: #fff; transition: border 0.15s; }
+  .radio-option:hover { border-color: #aaa; }
+  .radio-option.selected { border: 2px solid #111; }
+  .radio-option input[type=radio] { margin-top: 3px; flex-shrink: 0; cursor: pointer; accent-color: #111; }
+  .radio-label { font-size: 14px; color: #111; font-weight: 500; }
+  .radio-sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .pisos-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-left: 28px; }
+  .pisos-input { width: 70px; padding: 7px 10px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; }
+  .pisos-input:focus { border-color: #111; }
+  .section-title { font-size: 13px; color: #666; margin-bottom: 8px; display: block; font-weight: 500; }
+  .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .install-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; cursor: pointer; background: #fff; transition: border 0.15s; }
+  .install-card:hover { border-color: #aaa; }
+  .install-card.selected { border: 2px solid #111; }
+  .install-name { font-size: 13px; font-weight: 600; color: #111; }
+  .install-detail { font-size: 11px; color: #888; margin-top: 2px; }
+  .install-qty-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .install-qty-btn { width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 6px; background: #f5f5f3; color: #111; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .install-qty-num { font-size: 14px; font-weight: 600; min-width: 18px; text-align: center; color: #111; }
+  .compra-input-wrap { display: flex; align-items: center; gap: 8px; }
+  .compra-input { width: 100%; padding: 11px 14px; font-size: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; }
+  .compra-input:focus { border-color: #111; }
+  .divider { border: none; border-top: 1px solid #eee; margin: 1.25rem 0; }
+  .result-card { background: #f5f5f3; border-radius: 12px; padding: 1.25rem; }
+  .result-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: 14px; color: #666; padding: 5px 0; gap: 12px; }
+  .result-row.total { font-size: 18px; font-weight: 700; color: #111; margin-top: 8px; padding-top: 10px; border-top: 1px solid #ddd; }
+  .result-label { color: #666; font-size: 13px; }
+  .result-val { text-align: right; flex-shrink: 0; font-weight: 500; color: #111; }
+  .result-val.muted { color: #aaa; font-style: italic; font-size: 13px; font-weight: 400; }
+  .banner { display: flex; align-items: flex-start; gap: 8px; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
+  .banner-warn { background: #fffbeb; border: 1px solid #f59e0b; }
+  .banner-info { background: #eff6ff; border: 1px solid #93c5fd; }
+  .banner-text-warn { font-size: 13px; color: #92400e; line-height: 1.5; }
+  .banner-text-info { font-size: 13px; color: #1e40af; line-height: 1.5; }
+  .info-note { font-size: 12px; color: #aaa; margin-top: 10px; line-height: 1.5; }
+  .bh-btn-solicitar { display: block; width: 100%; margin-top: 16px; padding: 14px; background: #111; color: #fff; font-size: 15px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; letter-spacing: 0.2px; transition: background 0.15s; }
+  .bh-btn-solicitar:hover { background: #333; }
+  .empty-state { font-size: 14px; color: #aaa; text-align: center; padding: 1.5rem 0; }
+  @media (max-width: 480px) {
+    .card { padding: 1.25rem; }
+    .install-grid { grid-template-columns: 1fr; }
+    .zone-tab { font-size: 12px; padding: 9px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="bh-header">
+    <span class="bh-logo">Belgrano Home.</span>
+    <span class="bh-title">Calculá tu envío</span>
+  </div>
+
+  <p style="font-size:22px; font-weight:600; color:#111; margin-bottom:12px;">📍 Elegí tu ubicación</p>
+  <div class="zone-tabs">
+    <div class="zone-tab active" id="tab-caba-gba" onclick="switchZone('caba-gba')">CABA y GBA</div>
+    <div class="zone-tab" id="tab-expreso" onclick="switchZone('expreso')">Interior</div>
+  </div>
+
+  <!-- SECCIÓN CABA / GBA -->
+  <div id="section-caba-gba">
+    <div class="field-block">
+      <label class="field-label">Localidad de entrega</label>
+      <div class="search-wrap">
+        <input type="text" id="loc-input" placeholder="Escribí tu barrio o ciudad..." autocomplete="off" />
+        <div class="dropdown" id="loc-dropdown"></div>
+      </div>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label">Cantidad de muebles</label>
+      <div class="qty-row">
+        <button class="qty-btn" id="qty-minus">−</button>
+        <span class="qty-num" id="qty-display">1</span>
+        <button class="qty-btn" id="qty-plus">+</button>
+      </div>
+      <div class="field-hint" id="qty-hint">Los estantes o accesorios no cuentan como muebles</div>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label">¿Cómo se sube el mueble?</label>
+      <div class="radio-group">
+        <label class="radio-option selected" id="opt-ascensor">
+          <input type="radio" name="subida" value="ascensor" checked />
+          <div>
+            <div class="radio-label">Por ascensor</div>
+            <div class="radio-sub">Sin costo adicional — incluido en el precio de envío</div>
+          </div>
+        </label>
+        <label class="radio-option" id="opt-escalera">
+          <input type="radio" name="subida" value="escalera" />
+          <div>
+            <div class="radio-label">Por escalera</div>
+            <div class="radio-sub">Se cobra $4.000 adicionales por piso, por mueble</div>
+          </div>
+        </label>
+      </div>
+      <div id="pisos-row" style="display:none" class="pisos-row">
+        <span style="font-size:13px;color:#666">Pisos a subir:</span>
+        <input type="number" class="pisos-input" id="pisos-input" value="1" min="1" max="20" />
+        <span style="font-size:12px;color:#aaa">$4.000 × pisos × muebles</span>
+      </div>
+    </div>
+
+    <div class="field-block">
+      <span class="section-title">Instalaciones (opcional)</span>
+      <div class="install-grid" id="install-grid"></div>
+    </div>
+
+    <hr class="divider" />
+    <div id="result-area-caba"><div class="empty-state">Seleccioná tu localidad para ver el total</div></div>
+  </div>
+
+  <!-- SECCIÓN EXPRESO -->
+  <div id="section-expreso" style="display:none">
+    <div class="field-block">
+      <label class="field-label">Cantidad de muebles</label>
+      <div class="qty-row">
+        <button class="qty-btn" id="exp-qty-minus">−</button>
+        <span class="qty-num" id="exp-qty-display">1</span>
+        <button class="qty-btn" id="exp-qty-plus">+</button>
+      </div>
+      <div class="field-hint" id="exp-qty-hint">Los estantes o accesorios no cuentan como muebles</div>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label">Valor de la compra</label>
+      <div class="compra-input-wrap">
+        <input type="text" class="compra-input" id="compra-input" placeholder="$ 0" />
+      </div>
+
+    </div>
+
+    <hr class="divider" />
+    <div id="result-area-expreso"><div class="empty-state">Ingresá la cantidad de muebles y el valor de tu compra</div></div>
+  </div>
+</div>
+
+<script>
+// ─── DATOS ───────────────────────────────────────────────
+// Para actualizar precios: modificá el número a la derecha de cada localidad
+const LOCALIDADES = {
+  "CABA": 55000, "ALEJANDRO KORN": 94000, "ACASSUSO": 77000, "ADROGUE": 77000,
+  "ALDO BONZI": 83000, "AVELLANEDA": 77000, "BANFIELD": 77000, "BECCAR": 77000,
+  "BELLA VISTA": 83000, "BENAVIDEZ": 88000, "BERAZATEGUI": 77000, "BERISO": 88000,
+  "BERNAL": 77000, "BOULOGNE SUR MED": 77000, "BRANDSEN": 110000, "BURZACO": 83000,
+  "CAMPANA": 132000, "CANNING": 88000, "CAÑUELAS": 99000, "CARAPACHAY": 77000,
+  "CASEROS": 77000, "CASTELAR": 83000, "CITY BELL": 88000, "CIUDAD EVITA": 83000,
+  "CIUDAD JARDIN": 77000, "CIUDADELA": 77000, "DEL VISO": 83000, "DON BOSCO": 77000,
+  "DON TORCUATO": 77000, "EL PALOMAR": 83000, "EL TALAR": 83000, "ENSENADA": 93000,
+  "ESCOBAR": 93000, "ESPELETA": 77000, "ETCHEVERRY": 93000,
+  "EXALTACIÓN DE LA CRUZ": 122000, "EZEIZA": 88000, "FLORENCIO VARELA": 77000,
+  "FLORIDA": 77000, "GARIN": 88000, "GERLI": 77000, "GLEW": 83000,
+  "GONNET": 88000, "GONZALEZ CATAN": 88000, "GRAL. PACHECO": 83000,
+  "GRAL. RODRIGUEZ": 88000, "GRAND BOURG": 83000, "GUERNICA": 88000,
+  "GUILLON": 83000, "HAEDO": 77000, "HUDSON": 77000, "HURLINGHAM": 83000,
+  "ING. BUDGE": 77000, "ING. MASCHWITZ": 88000, "ITUZAINGO": 83000,
+  "JOSE C.PAZ": 88000, "JOSE LEON SUARES": 77000, "LA LUCILA": 77000,
+  "LA PLATA": 93000, "LA REJA": 83000, "LA UNION": 88000, "LAFERRERE": 88000,
+  "LANUS": 77000, "LOMA HERMOSA": 77000, "LOMAS DE ZAMORA": 77000,
+  "LOMAS DEL MIRADOR": 77000, "LONGCHAMPS": 77000, "LOS CARDALES": 126000,
+  "LOS HORNOS": 88000, "LOS POLVORINES": 77000, "LUJAN": 120000,
+  "MARCOS PAZ": 104000, "MARMOL": 77000, "MARTELLI": 77000,
+  "MARTIN CORONADO": 83000, "MARTINEZ": 77000, "MERCEDES": 165000,
+  "MERLO": 83000, "MONTE GRANDE": 83000, "MORENO": 83000, "MORON": 83000,
+  "MUNIZ": 83000, "MUNRO": 77000, "NORDELTA": 93000, "OLIVOS": 77000,
+  "PILAR": 93000, "PLATANOS": 77000, "QUILMES": 77000,
+  "REMEDIOS DE ESCALADA": 77000, "RAMOS MEJIA": 77000, "RANELAGH": 77000,
+  "RINGUELET": 88000, "SAENZ PEÑA": 77000, "SAN ANTONIO PADUA": 77000,
+  "SAN FERNANDO": 77000, "SAN ISIDRO": 77000, "SAN JUSTO": 77000,
+  "SAN MARTIN": 77000, "SAN MIGUEL": 83000, "SAN VICENTE": 93000,
+  "SANTOS LUGARES": 77000, "SARANDI": 77000, "TABLADA": 77000,
+  "TAPIALES": 83000, "TEMPERLEY": 77000, "TIGRE (no Nordelta)": 83000,
+  "TOLOSA": 88000, "TORTUGUITAS": 83000, "TRISTAN SUAREZ": 88000,
+  "TURDERA": 77000, "VICENTE LOPEZ": 77000, "VICTORIA": 77000,
+  "VILLA ADELINA": 77000, "VILLA BALLESTER": 77000, "VILLA CELINA": 77000,
+  "VILLA DOMINICO": 77000, "VILLA ELISA": 83000, "VILLA MADERO": 77000,
+  "VIRREY DEL PINO": 88000, "WILDE": 77000, "ZARATE": 148000
+};
+
+// Precios de instalación
+const INSTALACIONES = [
+  { id: "placard_c",  name: "Placard de Puerta Corrediza",  detail: "", price: 100000 },
+  { id: "placard_a",  name: "Placard de Puertas de Abrir",  detail: "", price: 80000  },
+  { id: "estante",    name: "Estante Flotante",              detail: "c/u", price: 50000 },
+  { id: "modulo",     name: "Módulo Colgante",               detail: "c/u", price: 50000 },
+  { id: "panel",      name: "Panel Colgante",                detail: "c/u", price: 50000 },
+  { id: "mdl_luz",    name: "Mesa de Luz Colgante",          detail: "c/u", price: 50000 },
+  { id: "respaldo",   name: "Respaldo Colgante",             detail: "",    price: 50000 },
+  { id: "silla",      name: "Sillas Importadas",               detail: "c/u", price: 20000 },
+];
+
+// Flete al depósito para envíos por expreso (precio CABA)
+const FLETE_DEPOSITO = 60000;
+
+// ─── LÓGICA ──────────────────────────────────────────────
+// 1er mueble = precio base · Cada adicional suma 5% del base
+function calcEnvio(base, cantidad) {
+  const ajustado = base + 5000;
+  return ajustado + base * 0.05 * (cantidad - 1);
+}
+
+let zone = 'caba-gba';
+let selectedLoc = null;
+let qty = 1;
+let subida = 'ascensor';
+let installQtys = {};
+INSTALACIONES.forEach(i => installQtys[i.id] = 0);
+let expQty = 1;
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString('es-AR'); }
+
+function capLoc(s) {
+  if (s === 'CABA') return 'CABA';
+  return s.split(' ').map(function(w) {
+    if (w === '') return '';
+    // Palabras cortas que van en minúscula (preposiciones)
+    var lower = ['DE', 'DEL', 'LA', 'LAS', 'LOS', 'EL', 'Y', 'SUR', 'MED'];
+    if (lower.indexOf(w) !== -1) return w.charAt(0) + w.slice(1).toLowerCase();
+    return w.charAt(0) + w.slice(1).toLowerCase();
+  }).join(' ');
+}
+
+function switchZone(z) {
+  zone = z;
+  document.getElementById('section-caba-gba').style.display = z === 'caba-gba' ? '' : 'none';
+  document.getElementById('section-expreso').style.display  = z === 'expreso'   ? '' : 'none';
+  document.getElementById('tab-caba-gba').classList.toggle('active', z === 'caba-gba');
+  document.getElementById('tab-expreso').classList.toggle('active',  z === 'expreso');
+}
+
+function buildInstallGrid() {
+  const grid = document.getElementById('install-grid');
+  INSTALACIONES.forEach(inst => {
+    const card = document.createElement('div');
+    card.className = 'install-card';
+    card.id = 'card-' + inst.id;
+    card.innerHTML = `
+      <div class="install-name">${inst.name}</div>
+      <div class="install-detail">${inst.detail} · ${fmt(inst.price)}</div>
+      <div class="install-qty-row" id="qrow-${inst.id}" style="display:none">
+        <button class="install-qty-btn" data-id="${inst.id}" data-op="minus">−</button>
+        <span class="install-qty-num" id="iqty-${inst.id}">1</span>
+        <button class="install-qty-btn" data-id="${inst.id}" data-op="plus">+</button>
+      </div>`;
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('install-qty-btn')) return;
+      const was = installQtys[inst.id] > 0;
+      installQtys[inst.id] = was ? 0 : 1;
+      card.classList.toggle('selected', !was);
+      document.getElementById('qrow-'+inst.id).style.display = was ? 'none' : 'flex';
+      if (!was) document.getElementById('iqty-'+inst.id).textContent = '1';
+      renderCabaGba();
+    });
+    grid.appendChild(card);
+  });
+  grid.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('install-qty-btn')) return;
+    const id = e.target.dataset.id, op = e.target.dataset.op;
+    installQtys[id] = op === 'plus' ? Math.min(20, installQtys[id]+1) : Math.max(1, installQtys[id]-1);
+    document.getElementById('iqty-'+id).textContent = installQtys[id];
+    renderCabaGba();
+  });
+}
+
+const locInput  = document.getElementById('loc-input');
+const dropdown  = document.getElementById('loc-dropdown');
+
+function filterLocs(q) {
+  const uq = q.toUpperCase().trim();
+  if (!uq) return [];
+  return Object.entries(LOCALIDADES)
+    .filter(([k]) => k.includes(uq))
+    .sort((a,b) => { const ai=a[0].indexOf(uq), bi=b[0].indexOf(uq); return ai-bi || a[0].localeCompare(b[0]); })
+    .slice(0, 12);
+}
+
+function showDropdown(results) {
+  dropdown.innerHTML = '';
+  if (!results.length) { dropdown.classList.remove('open'); return; }
+  results.forEach(([loc, price]) => {
+    const item = document.createElement('div');
+    item.className = 'drop-item';
+    item.innerHTML = `<span>${capLoc(loc)}</span>`;
+    item.addEventListener('click', () => {
+      selectedLoc = loc;
+      locInput.value = capLoc(loc);
+      dropdown.classList.remove('open');
+      renderCabaGba();
+    });
+    dropdown.appendChild(item);
+  });
+  dropdown.classList.add('open');
+}
+
+locInput.addEventListener('input',  () => { selectedLoc = null; showDropdown(filterLocs(locInput.value)); renderCabaGba(); });
+locInput.addEventListener('focus',  () => { if (locInput.value) showDropdown(filterLocs(locInput.value)); });
+document.addEventListener('click',  (e) => { if (!e.target.closest('.search-wrap')) dropdown.classList.remove('open'); });
+
+document.getElementById('qty-minus').addEventListener('click', () => { qty=Math.max(1,qty-1); document.getElementById('qty-display').textContent=qty; renderCabaGba(); });
+document.getElementById('qty-plus').addEventListener('click',  () => { qty=Math.min(20,qty+1); document.getElementById('qty-display').textContent=qty; renderCabaGba(); });
+
+document.querySelectorAll('input[name=subida]').forEach(r => {
+  r.addEventListener('change', () => {
+    subida = r.value;
+    document.getElementById('opt-ascensor').classList.toggle('selected', subida==='ascensor');
+    document.getElementById('opt-escalera').classList.toggle('selected', subida==='escalera');
+    document.getElementById('pisos-row').style.display = subida==='escalera' ? 'flex' : 'none';
+    renderCabaGba();
+  });
+});
+document.getElementById('pisos-input').addEventListener('input', renderCabaGba);
+
+document.getElementById('exp-qty-minus').addEventListener('click', () => { expQty=Math.max(1,expQty-1); document.getElementById('exp-qty-display').textContent=expQty; renderExpreso(); });
+document.getElementById('exp-qty-plus').addEventListener('click',  () => { expQty=Math.min(20,expQty+1); document.getElementById('exp-qty-display').textContent=expQty; renderExpreso(); });
+document.getElementById('compra-input').addEventListener('input', function() {
+  var raw = this.value.replace(/\D/g, '');
+  var num = parseInt(raw) || 0;
+  this.value = num > 0 ? '$ ' + num.toLocaleString('es-AR') : '';
+  renderExpreso();
+});
+
+function renderCabaGba() {
+  const el   = document.getElementById('result-area-caba');
+  const hint = document.getElementById('qty-hint');
+  if (selectedLoc && qty > 1) {
+    const _base = LOCALIDADES[selectedLoc];
+    const _extra = Math.round(_base * 0.05);
+    hint.textContent = `Cada mueble adicional suma $${_extra.toLocaleString('es-AR')} más al envío`;
+  } else {
+    hint.textContent = 'Los estantes o accesorios no cuentan como muebles';
+  }
+
+  if (!selectedLoc) { el.innerHTML='<div class="empty-state">Seleccioná tu localidad para ver el total</div>'; return; }
+
+  const base      = LOCALIDADES[selectedLoc];
+  const envioBase = calcEnvio(base, qty);
+  const esGBA     = selectedLoc !== 'CABA';
+
+  let escaleraTotal = 0;
+  if (subida === 'escalera') {
+    const pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+    escaleraTotal = 4000 * pisos * qty;
+  }
+
+  let installTotal = 0, installLines = [];
+  INSTALACIONES.forEach(inst => {
+    const q = installQtys[inst.id];
+    if (q > 0) { installTotal += inst.price*q; installLines.push({name:inst.name, q, subtotal:inst.price*q}); }
+  });
+
+  const total      = envioBase + escaleraTotal + installTotal;
+  const locDisplay = capLoc(selectedLoc);
+  const envioLabel = `Envío a ${locDisplay}`;
+
+  let html = `<div class="result-card">`;
+  html += `<div class="result-row"><span class="result-label">${envioLabel}</span><span class="result-val">${fmt(envioBase)}</span></div>`;
+  if (escaleraTotal > 0) {
+    const pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+    html += `<div class="result-row"><span class="result-label">Adicional escalera (${pisos} ${pisos===1?'piso':'pisos'} × ${qty} mueble${qty>1?'s':''})</span><span class="result-val">${fmt(escaleraTotal)}</span></div>`;
+  }
+  installLines.forEach(l => {
+    html += `<div class="result-row"><span class="result-label">${l.name} × ${l.q}</span><span class="result-val">${fmt(l.subtotal)}</span></div>`;
+  });
+  html += `<div class="result-row total"><span>Costo del envío</span><span class="result-val">${fmt(total)}</span></div></div>`;
+  if (esGBA) html += `<div class="banner banner-warn"><span style="font-size:15px;flex-shrink:0">⚠</span><span class="banner-text-warn">El peaje no está incluido. Se abona aparte el día de la entrega.</span></div>`;
+  html += `<p class="info-note" style="color:#555;">El envío se puede abonar cuando recibís tu pedido. ¡Que lo disfrutes!</p>`;
+  html += `<button class="bh-btn-solicitar" onclick="solicitarEnvio()">Solicitar envío</button>`;
+  el.innerHTML = html;
+}
+
+function renderExpreso() {
+  const el   = document.getElementById('result-area-expreso');
+  const hint = document.getElementById('exp-qty-hint');
+  hint.textContent = 'Los estantes o accesorios no cuentan como muebles';
+
+  const flete     = calcEnvio(FLETE_DEPOSITO, expQty);
+  const compraVal = parseFloat(document.getElementById('compra-input').value.replace(/\./g, '').replace('$ ', '').replace(',', '.')) || 0;
+  const embalaje  = compraVal > 0 ? compraVal * 0.10 : 0;
+
+  let html = `<div class="result-card">`;
+  html += `<div class="result-row"><span class="result-label">Entrega en transporte</span><span class="result-val">${fmt(flete)}</span></div>`;
+  html += `<div class="result-row"><span class="result-label">Costo del embalaje</span><span class="result-val">${embalaje > 0 ? fmt(embalaje) : '$0'}</span></div>`;
+  html += `<div class="result-row"><span class="result-label">Valor del expreso</span><span class="result-val muted">A coordinar</span></div>`;
+  html += `<div class="result-row total"><span>Subtotal (sin expreso)</span><span class="result-val">${fmt(flete+embalaje)}</span></div>`;
+  html += `</div>`;
+  html += `<div class="banner banner-info"><span style="font-size:15px;flex-shrink:0">ℹ</span><span class="banner-text-info">El costo del expreso se coordina con la empresa de transporte. Una vez confirmada tu compra, te orientamos con el proceso.</span></div>`;
+  html += `<p class="info-note" style="color:#555;">El envío se debe abonar cuando está listo el pedido.</p>`;
+  html += `<button class="bh-btn-solicitar" onclick="solicitarEnvio()">Solicitar envío</button>`;
+  el.innerHTML = html;
+}
+
+function solicitarEnvio() {
+  var isExpreso = zone === 'expreso';
+  var subtitulo = isExpreso ? 'Interior — Envío por Expreso' : 'CABA / GBA';
+
+  // ── Recopilar datos ───────────────────────────────────
+  var datosSrv = [], resumenEco = [], total = '', notasPeaje = false;
+
+  if (!isExpreso) {
+    if (!selectedLoc) { alert('Por favor seleccioná tu localidad primero.'); return; }
+    var base   = LOCALIDADES[selectedLoc];
+    var envio  = calcEnvio(base, qty);
+    var escTot = 0;
+    if (subida === 'escalera') {
+      var p = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+      escTot = 4000 * p * qty;
+    }
+    var instTot = 0, instLineas = [];
+    INSTALACIONES.forEach(function(i){
+      var q = installQtys[i.id];
+      if (q > 0) { instTot += i.price * q; instLineas.push(i.name + (q > 1 ? ' × ' + q : '')); }
+    });
+    var totalNum = envio + escTot + instTot;
+
+    datosSrv.push(['Localidad', capLoc(selectedLoc)]);
+    datosSrv.push(['Cantidad de muebles', qty + (qty === 1 ? ' mueble' : ' muebles')]);
+    datosSrv.push(['Modalidad de subida', subida === 'ascensor' ? 'Ascensor' : 'Escalera']);
+    if (instLineas.length) datosSrv.push(['Instalación adicional', instLineas.join(', ')]);
+
+    var envioSolo = calcEnvio(base, qty) + escTot;
+    if (envioSolo > 0)  resumenEco.push(['Envío', fmt(envioSolo)]);
+    if (instTot > 0)    resumenEco.push(['Instalación', fmt(instTot)]);
+    total = fmt(totalNum);
+    notasPeaje = (selectedLoc !== 'CABA');
+
+  } else {
+    var compraRaw = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
+    var compraVal = parseFloat(compraRaw) || 0;
+    var flete     = calcEnvio(FLETE_DEPOSITO, expQty);
+    var embalaje  = compraVal > 0 ? compraVal * 0.10 : 0;
+
+    datosSrv.push(['Cantidad de muebles', expQty + (expQty === 1 ? ' mueble' : ' muebles')]);
+    resumenEco.push(['Flete hasta el expreso', fmt(flete)]);
+    if (embalaje > 0) resumenEco.push(['Embalaje y Garantía', fmt(embalaje)]);
+    resumenEco.push(['Valor del expreso', 'A coordinar']);
+    total = fmt(flete + embalaje);
+  }
+
+  // ── CANVAS ────────────────────────────────────────────
+  var W = 900, padX = 60;
+  var C_DARK  = '#1e1e3a';
+  var C_MID   = '#666677';
+  var C_LIGHT = '#999aaa';
+  var C_LINE  = '#e8e8ec';
+  var C_BOX   = '#ededf5';
+
+  var lineH     = 46;
+  var secTitleH = 50;
+  var sep       = 28;
+  var boxH      = 130;
+  var notaH     = 30;
+  var footerH   = 64;
+  var notas     = notasPeaje
+    ? ['Valores en efectivo.', 'El valor no incluye peajes ni seguros.']
+    : ['Valores en efectivo.', 'El valor no incluye seguros.'];
+
+  var H = 60 + 110 + sep
+    + secTitleH + datosSrv.length  * lineH + sep
+    + secTitleH + resumenEco.length * lineH + sep
+    + boxH + sep
+    + secTitleH + notas.length * notaH + sep
+    + footerH + 40;
+
+  var canvas = document.createElement('canvas');
+  canvas.width  = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+
+  // helpers
+  function roundRect(x, y, w, h, r, fill) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  // Fondo blanco
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, W, H);
+
+  var y = 60;
+
+  // ── HEADER ──────────────────────────────────────────
+  ctx.fillStyle = C_DARK;
+  ctx.font = 'italic 38px Georgia, serif';
+  ctx.fillText('Belgrano Home', padX, y + 36);
+
+  var now   = new Date();
+  var fecha = now.toLocaleDateString('es-AR', {day:'2-digit', month:'2-digit', year:'numeric'}).replace(/\//g,' / ');
+  ctx.font  = '14px Arial, sans-serif';
+  ctx.fillStyle = C_MID;
+  var fw = ctx.measureText(fecha).width;
+  ctx.fillText(fecha, W - padX - fw, y + 14);
+  y += 50;
+
+  ctx.font = 'bold 11px Arial, sans-serif';
+  ctx.fillStyle = C_MID;
+  ctx.fillText('COTIZACIÓN DE ENVÍO', padX, y);
+  y += 22;
+  ctx.font = '12px Arial, sans-serif';
+  ctx.fillStyle = C_LIGHT;
+  ctx.fillText(subtitulo.toUpperCase(), padX, y);
+  y += 28;
+
+  ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
+  y += sep;
+
+  // ── DATOS DEL SERVICIO ──────────────────────────────
+  ctx.font = 'italic 28px Georgia, serif';
+  ctx.fillStyle = C_DARK;
+  ctx.fillText('Datos del servicio', padX, y + 24);
+  y += secTitleH;
+
+  datosSrv.forEach(function(row) {
+    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
+    y += 14;
+    ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
+    ctx.fillText(row[0] + ':', padX, y + 14);
+    ctx.font = 'bold 15px Arial, sans-serif'; ctx.fillStyle = C_DARK;
+    ctx.fillText(row[1], padX + 280, y + 14);
+    y += lineH - 14;
+  });
+  y += sep;
+
+  // ── RESUMEN ECONÓMICO ───────────────────────────────
+  ctx.font = 'italic 28px Georgia, serif';
+  ctx.fillStyle = C_DARK;
+  ctx.fillText('Resumen económico', padX, y + 24);
+  y += secTitleH;
+
+  resumenEco.forEach(function(row) {
+    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
+    y += 14;
+    ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
+    ctx.fillText(row[0], padX, y + 14);
+    ctx.font = 'bold 20px Arial, sans-serif'; ctx.fillStyle = C_DARK;
+    var vw = ctx.measureText(row[1]).width;
+    ctx.fillText(row[1], W - padX - vw, y + 12);
+    y += lineH - 14;
+  });
+  y += sep;
+
+  // ── CAJA TOTAL ──────────────────────────────────────
+  roundRect(padX, y, W - padX * 2, boxH, 12, C_BOX);
+
+  ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
+  var lt = 'TOTAL A ABONAR';
+  var ltw = ctx.measureText(lt).width;
+  ctx.fillText(lt, (W - ltw) / 2, y + 30);
+
+  ctx.font = 'bold 40px Arial, sans-serif'; ctx.fillStyle = C_DARK;
+  var tw = ctx.measureText(total).width;
+  ctx.fillText(total, (W - tw) / 2, y + 82);
+  y += boxH + sep;
+
+  // ── IMPORTANTE ──────────────────────────────────────
+  ctx.font = 'italic 28px Georgia, serif'; ctx.fillStyle = C_DARK;
+  ctx.fillText('Importante', padX, y + 24);
+  y += secTitleH;
+
+  notas.forEach(function(nota) {
+    ctx.strokeStyle = C_MID; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(padX + 8, y + 9, 8, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.font = '11px Arial, sans-serif'; ctx.fillStyle = C_MID;
+    ctx.fillText('✓', padX + 4, y + 13);
+    ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
+    ctx.fillText(nota, padX + 24, y + 13);
+    y += notaH;
+  });
+  y += sep;
+
+  // ── FOOTER ──────────────────────────────────────────
+  ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
+  y += 20;
+
+  ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
+  ctx.fillText('belgranohome.com.ar', padX + 20, y);
+  ctx.strokeStyle = C_LIGHT; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(padX + 8, y - 4, 7, 0, Math.PI*2); ctx.stroke();
+
+  var pie = 'El envío se abona al recibir tu pedido.';
+  ctx.fillStyle = C_LIGHT;
+  var pw = ctx.measureText(pie).width;
+  ctx.fillText(pie, W - padX - pw, y);
+
+  // ── DESCARGAR JPG ──────────────────────────────────
+  var link = document.createElement('a');
+  link.download = 'cotizacion-envio-belgrano-home.jpg';
+  link.href = canvas.toDataURL('image/jpeg', 0.97);
+  link.click();
+
+  // ── WHATSAPP ────────────────────────────────────────
+  var msg = '*Belgrano Home — Cotización de Envío*\n';
+  msg += '_' + subtitulo + '_\n\n';
+  msg += '*Datos del servicio*\n';
+  datosSrv.forEach(function(r){ msg += '• ' + r[0] + ': ' + r[1] + '\n'; });
+  msg += '\n*Resumen económico*\n';
+  resumenEco.forEach(function(r){ msg += '• ' + r[0] + ': ' + r[1] + '\n'; });
+  msg += '\n*' + (isExpreso ? 'Subtotal (sin expreso)' : 'Total a abonar') + ': ' + total + '*';
+  msg += '\n\n_Valores en efectivo. No incluye peajes ni seguros._';
+  msg += '\n_Generado en belgranohomeenvios.netlify.app_';
+
+  var waURL = 'https://wa.me/541133595571?text=' + encodeURIComponent(msg);
+  setTimeout(function(){ window.open(waURL, '_blank'); }, 700);
+}
+
+buildInstallGrid();
+renderCabaGba();
+renderExpreso();
+</script>
+</body>
+</html>
