@@ -42,6 +42,13 @@
   .pisos-input { width: 70px; padding: 7px 10px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; }
   .pisos-input:focus { border-color: #111; }
   .section-title { font-size: 13px; color: #666; margin-bottom: 8px; display: block; font-weight: 500; }
+  .inst-toggle { width: 100%; padding: 12px 16px; background: #fff; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 500; color: #111; text-align: left; transition: border-color 0.15s; }
+  .inst-toggle:hover { border-color: #aaa; }
+  .inst-toggle.open { border: 1.5px solid #111; border-radius: 8px 8px 0 0; }
+  .inst-arrow { font-size: 12px; color: #888; transition: transform 0.2s; }
+  .inst-arrow.open { transform: rotate(180deg); }
+  .inst-panel { border: 1.5px solid #111; border-top: none; border-radius: 0 0 8px 8px; padding: 12px; display: none; }
+  .inst-panel.open { display: block; }
   .install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .install-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; cursor: pointer; background: #fff; transition: border 0.15s; }
   .install-card:hover { border-color: #aaa; }
@@ -136,8 +143,13 @@
     </div>
 
     <div class="field-block">
-      <span class="section-title">Instalaciones (opcional)</span>
-      <div class="install-grid" id="install-grid"></div>
+      <button class="inst-toggle" id="inst-toggle" type="button" onclick="toggleInst()">
+        <span>¿Necesitás alguna instalación?</span>
+        <span class="inst-arrow" id="inst-arrow">▼</span>
+      </button>
+      <div class="inst-panel" id="inst-panel">
+        <div class="install-grid" id="install-grid"></div>
+      </div>
     </div>
 
     <hr class="divider" />
@@ -173,7 +185,22 @@
 // ─── DATOS ───────────────────────────────────────────────
 // Para actualizar precios: modificá el número a la derecha de cada localidad
 const LOCALIDADES = {
-  "CABA": 55000, "ALEJANDRO KORN": 94000, "ACASSUSO": 77000, "ADROGUE": 77000,
+  "CABA": 55000,
+  // Barrios de CABA — todos con precio CABA
+  "AGRONOMIA": 55000, "ALMAGRO": 55000, "BALVANERA": 55000, "BARRACAS": 55000,
+  "BELGRANO": 55000, "BOEDO": 55000, "CABALLITO": 55000, "CHACARITA": 55000,
+  "COGHLAN": 55000, "COLEGIALES": 55000, "CONSTITUCION": 55000, "FLORES": 55000,
+  "FLORESTA": 55000, "LA BOCA": 55000, "LA PATERNAL": 55000, "LINIERS": 55000,
+  "MATADEROS": 55000, "MONTE CASTRO": 55000, "MONTSERRAT": 55000, "NUEVA POMPEYA": 55000,
+  "NUÑEZ": 55000, "PALERMO": 55000, "PARQUE AVELLANEDA": 55000, "PARQUE CHACABUCO": 55000,
+  "PARQUE CHAS": 55000, "PARQUE PATRICIOS": 55000, "PATERNAL": 55000, "PUERTO MADERO": 55000,
+  "RECOLETA": 55000, "RETIRO": 55000, "SAAVEDRA": 55000, "SAN CRISTOBAL": 55000,
+  "SAN NICOLAS": 55000, "SAN TELMO": 55000, "VELEZ SARSFIELD": 55000, "VERSALLES": 55000,
+  "VILLA CRESPO": 55000, "VILLA DEL PARQUE": 55000, "VILLA DEVOTO": 55000,
+  "VILLA GRAL. MITRE": 55000, "VILLA LUGANO": 55000, "VILLA LURO": 55000,
+  "VILLA ORTUZAR": 55000, "VILLA PUEYRREDON": 55000, "VILLA REAL": 55000,
+  "VILLA RIACHUELO": 55000, "VILLA SANTA RITA": 55000, "VILLA SOLDATI": 55000,
+  "VILLA URQUIZA": 55000, "VILLA DEL PARQUE": 55000, "ALEJANDRO KORN": 94000, "ACASSUSO": 77000, "ADROGUE": 77000,
   "ALDO BONZI": 83000, "AVELLANEDA": 77000, "BANFIELD": 77000, "BECCAR": 77000,
   "BELLA VISTA": 83000, "BENAVIDEZ": 88000, "BERAZATEGUI": 77000, "BERISO": 88000,
   "BERNAL": 77000, "BOULOGNE SUR MED": 77000, "BRANDSEN": 110000, "BURZACO": 83000,
@@ -260,6 +287,16 @@ function switchZone(z) {
   document.getElementById('section-expreso').style.display  = z === 'expreso'   ? '' : 'none';
   document.getElementById('tab-caba-gba').classList.toggle('active', z === 'caba-gba');
   document.getElementById('tab-expreso').classList.toggle('active',  z === 'expreso');
+}
+
+function toggleInst() {
+  var panel  = document.getElementById('inst-panel');
+  var toggle = document.getElementById('inst-toggle');
+  var arrow  = document.getElementById('inst-arrow');
+  var isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
 }
 
 function buildInstallGrid() {
@@ -368,7 +405,7 @@ function renderCabaGba() {
 
   const base      = LOCALIDADES[selectedLoc];
   const envioBase = calcEnvio(base, qty);
-  const esGBA     = selectedLoc !== 'CABA';
+  const esGBA     = LOCALIDADES[selectedLoc] > 55000;
 
   let escaleraTotal = 0;
   if (subida === 'escalera') {
@@ -414,7 +451,7 @@ function renderExpreso() {
   let html = `<div class="result-card">`;
   html += `<div class="result-row"><span class="result-label">Entrega en transporte</span><span class="result-val">${fmt(flete)}</span></div>`;
   html += `<div class="result-row"><span class="result-label">Costo del embalaje</span><span class="result-val">${embalaje > 0 ? fmt(embalaje) : '$0'}</span></div>`;
-  html += `<div class="result-row"><span class="result-label">Valor del expreso</span><span class="result-val muted">A coordinar</span></div>`;
+  html += `<div class="result-row"><span class="result-label">Valor del expreso</span><span class="result-val muted">A convenir</span></div>`;
   html += `<div class="result-row total"><span>Subtotal (sin expreso)</span><span class="result-val">${fmt(flete+embalaje)}</span></div>`;
   html += `</div>`;
   html += `<div class="banner banner-info"><span style="font-size:15px;flex-shrink:0">ℹ</span><span class="banner-text-info">El costo del expreso se coordina con la empresa de transporte. Una vez confirmada tu compra, te orientamos con el proceso.</span></div>`;
@@ -455,7 +492,7 @@ function solicitarEnvio() {
     if (envioSolo > 0)  resumenEco.push(['Envío', fmt(envioSolo)]);
     if (instTot > 0)    resumenEco.push(['Instalación', fmt(instTot)]);
     total = fmt(totalNum);
-    notasPeaje = (selectedLoc !== 'CABA');
+    notasPeaje = (LOCALIDADES[selectedLoc] > 55000);
 
   } else {
     var compraRaw = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
@@ -466,171 +503,122 @@ function solicitarEnvio() {
     datosSrv.push(['Cantidad de muebles', expQty + (expQty === 1 ? ' mueble' : ' muebles')]);
     resumenEco.push(['Flete hasta el expreso', fmt(flete)]);
     if (embalaje > 0) resumenEco.push(['Embalaje y Garantía', fmt(embalaje)]);
-    resumenEco.push(['Valor del expreso', 'A coordinar']);
+    resumenEco.push(['Valor del expreso', 'A convenir']);
     total = fmt(flete + embalaje);
   }
 
   // ── CANVAS ────────────────────────────────────────────
   var W = 900, padX = 60;
   var C_DARK  = '#1e1e3a';
-  var C_MID   = '#666677';
-  var C_LIGHT = '#999aaa';
+  var C_MID   = '#888888';
+  var C_LIGHT = '#bbbbbb';
   var C_LINE  = '#e8e8ec';
-  var C_BOX   = '#ededf5';
+  var C_BOX   = '#f0f0f8';
 
-  var lineH     = 46;
-  var secTitleH = 50;
-  var sep       = 28;
-  var boxH      = 130;
-  var notaH     = 30;
-  var footerH   = 64;
-  var notas     = notasPeaje
-    ? ['Valores en efectivo.', 'El valor no incluye peajes ni seguros.']
+  var lineH   = 52;
+  var sep     = 24;
+  var boxH    = 110;
+  var notaH   = 32;
+  var footerH = 56;
+  var notas   = notasPeaje
+    ? ['Valores en efectivo.', 'El valor no incluye seguros.', 'Peajes no incluidos — se abonan el día de la entrega.']
     : ['Valores en efectivo.', 'El valor no incluye seguros.'];
 
-  var H = 60 + 110 + sep
-    + secTitleH + datosSrv.length  * lineH + sep
-    + secTitleH + resumenEco.length * lineH + sep
+  // Filas unificadas: datos + resumen juntos
+  var todasFilas = datosSrv.concat(resumenEco);
+
+  var H = (56 + 60 + sep
+    + 28 + sep
+    + todasFilas.length * lineH + sep
     + boxH + sep
-    + secTitleH + notas.length * notaH + sep
-    + footerH + 40;
+    + 32 + notas.length * notaH + sep
+    + footerH + 32);
 
   var canvas = document.createElement('canvas');
   canvas.width  = W;
   canvas.height = H;
   var ctx = canvas.getContext('2d');
 
-  // helpers
-  function roundRect(x, y, w, h, r, fill) {
-    ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.lineTo(x + w - r, y);
-    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-    ctx.lineTo(x + w, y + h - r);
-    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    ctx.lineTo(x + r, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-    ctx.lineTo(x, y + r);
-    ctx.quadraticCurveTo(x, y, x + r, y);
-    ctx.closePath();
-    ctx.fillStyle = fill;
-    ctx.fill();
-  }
-
-  // Fondo blanco
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, W, H);
 
-  var y = 60;
+  var y = 56;
 
-  // ── HEADER ──────────────────────────────────────────
+  // Marca
   ctx.fillStyle = C_DARK;
-  ctx.font = 'italic 38px Georgia, serif';
-  ctx.fillText('Belgrano Home', padX, y + 36);
-
-  var now   = new Date();
+  ctx.font = 'bold 32px Arial, sans-serif';
+  ctx.fillText('Belgrano Home', padX, y + 28);
+  var now = new Date();
   var fecha = now.toLocaleDateString('es-AR', {day:'2-digit', month:'2-digit', year:'numeric'}).replace(/\//g,' / ');
-  ctx.font  = '14px Arial, sans-serif';
-  ctx.fillStyle = C_MID;
+  ctx.font = '13px Arial, sans-serif'; ctx.fillStyle = C_MID;
   var fw = ctx.measureText(fecha).width;
-  ctx.fillText(fecha, W - padX - fw, y + 14);
-  y += 50;
+  ctx.fillText(fecha, W - padX - fw, y + 10);
+  y += 60 + sep;
 
-  ctx.font = 'bold 11px Arial, sans-serif';
-  ctx.fillStyle = C_MID;
-  ctx.fillText('COTIZACIÓN DE ENVÍO', padX, y);
-  y += 22;
-  ctx.font = '12px Arial, sans-serif';
-  ctx.fillStyle = C_LIGHT;
-  ctx.fillText(subtitulo.toUpperCase(), padX, y);
-  y += 28;
-
+  // Título sección
+  ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
+  ctx.fillText('RESUMEN DEL ENVÍO', padX, y);
+  y += 20;
   ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
   y += sep;
 
-  // ── DATOS DEL SERVICIO ──────────────────────────────
-  ctx.font = 'italic 28px Georgia, serif';
-  ctx.fillStyle = C_DARK;
-  ctx.fillText('Datos del servicio', padX, y + 24);
-  y += secTitleH;
-
-  datosSrv.forEach(function(row) {
-    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
-    y += 14;
-    ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
-    ctx.fillText(row[0] + ':', padX, y + 14);
-    ctx.font = 'bold 15px Arial, sans-serif'; ctx.fillStyle = C_DARK;
-    ctx.fillText(row[1], padX + 280, y + 14);
-    y += lineH - 14;
-  });
-  y += sep;
-
-  // ── RESUMEN ECONÓMICO ───────────────────────────────
-  ctx.font = 'italic 28px Georgia, serif';
-  ctx.fillStyle = C_DARK;
-  ctx.fillText('Resumen económico', padX, y + 24);
-  y += secTitleH;
-
-  resumenEco.forEach(function(row) {
-    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
-    y += 14;
-    ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
-    ctx.fillText(row[0], padX, y + 14);
+  // Filas
+  todasFilas.forEach(function(row, i) {
+    var bg = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, y - 8, W, lineH);
+    ctx.font = '15px Arial, sans-serif'; ctx.fillStyle = C_MID;
+    ctx.fillText(row[0], padX, y + 18);
     ctx.font = 'bold 20px Arial, sans-serif'; ctx.fillStyle = C_DARK;
     var vw = ctx.measureText(row[1]).width;
-    ctx.fillText(row[1], W - padX - vw, y + 12);
-    y += lineH - 14;
+    ctx.fillText(row[1], W - padX - vw, y + 16);
+    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padX, y + lineH - 10); ctx.lineTo(W - padX, y + lineH - 10); ctx.stroke();
+    y += lineH;
   });
   y += sep;
 
-  // ── CAJA TOTAL ──────────────────────────────────────
-  roundRect(padX, y, W - padX * 2, boxH, 12, C_BOX);
-
+  // Caja total
+  ctx.fillStyle = C_BOX;
+  ctx.fillRect(padX, y, W - padX * 2, boxH);
   ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
-  var lt = 'TOTAL A ABONAR';
-  var ltw = ctx.measureText(lt).width;
-  ctx.fillText(lt, (W - ltw) / 2, y + 30);
-
-  ctx.font = 'bold 40px Arial, sans-serif'; ctx.fillStyle = C_DARK;
+  var lt = 'TOTAL A ABONAR :'; var ltw = ctx.measureText(lt).width;
+  ctx.fillText(lt, (W - ltw) / 2, y + 22);
+  ctx.font = 'bold 38px Arial, sans-serif'; ctx.fillStyle = C_DARK;
   var tw = ctx.measureText(total).width;
-  ctx.fillText(total, (W - tw) / 2, y + 82);
+  ctx.fillText(total, (W - tw) / 2, y + 74);
   y += boxH + sep;
 
-  // ── IMPORTANTE ──────────────────────────────────────
-  ctx.font = 'italic 28px Georgia, serif'; ctx.fillStyle = C_DARK;
-  ctx.fillText('Importante', padX, y + 24);
-  y += secTitleH;
-
+  // Importante
+  ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
+  ctx.fillText('IMPORTANTE', padX, y);
+  y += 20;
+  ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
+  y += 14;
   notas.forEach(function(nota) {
     ctx.strokeStyle = C_MID; ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(padX + 8, y + 9, 8, 0, Math.PI * 2);
-    ctx.stroke();
+    ctx.beginPath(); ctx.arc(padX + 7, y + 8, 7, 0, Math.PI * 2); ctx.stroke();
     ctx.font = '11px Arial, sans-serif'; ctx.fillStyle = C_MID;
-    ctx.fillText('✓', padX + 4, y + 13);
+    ctx.fillText('✓', padX + 3, y + 12);
     ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
-    ctx.fillText(nota, padX + 24, y + 13);
+    ctx.fillText(nota, padX + 22, y + 12);
     y += notaH;
   });
   y += sep;
 
-  // ── FOOTER ──────────────────────────────────────────
+  // Footer
   ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
-  y += 20;
-
-  ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
-  ctx.fillText('belgranohome.com.ar', padX + 20, y);
+  y += 18;
   ctx.strokeStyle = C_LIGHT; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.arc(padX + 8, y - 4, 7, 0, Math.PI*2); ctx.stroke();
-
-  var pie = 'El envío se abona al recibir tu pedido.';
-  ctx.fillStyle = C_LIGHT;
-  var pw = ctx.measureText(pie).width;
-  ctx.fillText(pie, W - padX - pw, y);
+  ctx.beginPath(); ctx.arc(padX + 7, y + 7, 7, 0, Math.PI * 2); ctx.stroke();
+  ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
+  ctx.fillText('belgranohome.com.ar', padX + 20, y + 2);
+  var waFooter = 'WhatsApp: 11 3359-5571';
+  var wfw = ctx.measureText(waFooter).width;
+  ctx.fillText(waFooter, W - padX - wfw, y + 2);
 
   // ── DESCARGAR JPG ──────────────────────────────────
   var link = document.createElement('a');
@@ -639,15 +627,26 @@ function solicitarEnvio() {
   link.click();
 
   // ── WHATSAPP ────────────────────────────────────────
-  var msg = '*Belgrano Home — Cotización de Envío*\n';
-  msg += '_' + subtitulo + '_\n\n';
-  msg += '*Datos del servicio*\n';
-  datosSrv.forEach(function(r){ msg += '• ' + r[0] + ': ' + r[1] + '\n'; });
-  msg += '\n*Resumen económico*\n';
-  resumenEco.forEach(function(r){ msg += '• ' + r[0] + ': ' + r[1] + '\n'; });
-  msg += '\n*' + (isExpreso ? 'Subtotal (sin expreso)' : 'Total a abonar') + ': ' + total + '*';
-  msg += '\n\n_Valores en efectivo. No incluye peajes ni seguros._';
-  msg += '\n_Generado en belgranohomeenvios.netlify.app_';
+  var zonaMsg = isExpreso ? 'Interior - Envío con Expreso' : 'CABA / GBA';
+  var msg = '*Cotización del Envío*\n';
+  msg += zonaMsg + '\n\n';
+  msg += 'Resumen del Envío\n';
+  if (!isExpreso) {
+    datosSrv.forEach(function(r){ msg += r[0] + ': ' + r[1] + '\n'; });
+    resumenEco.forEach(function(r){ msg += r[0] + ': ' + r[1] + '\n'; });
+    if (notasPeaje) msg += 'Peajes: No incluidos\n';
+    msg += '\nTotal a abonar: ' + total;
+  } else {
+    var compraRaw2 = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
+    var compraVal2 = parseFloat(compraRaw2) || 0;
+    var flete2 = calcEnvio(FLETE_DEPOSITO, expQty);
+    var emb2 = compraVal2 > 0 ? compraVal2 * 0.10 : 0;
+    msg += 'Cantidad de muebles: ' + expQty + '\n';
+    msg += 'Flete hasta el expreso: ' + fmt(flete2) + '\n';
+    if (emb2 > 0) msg += 'Embalaje y Garantía: ' + fmt(emb2) + '\n';
+    msg += 'Costo del expreso: NO incluido\n';
+    msg += '\nTotal a abonar: ' + total;
+  }
 
   var waURL = 'https://wa.me/541133595571?text=' + encodeURIComponent(msg);
   setTimeout(function(){ window.open(waURL, '_blank'); }, 700);
@@ -659,3 +658,4 @@ renderExpreso();
 </script>
 </body>
 </html>
+
