@@ -8,17 +8,21 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; }
   .card { background: #fff; border-radius: 16px; padding: 2rem; max-width: 620px; width: 100%; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+
+  /* Header */
   .bh-header { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-bottom: 1.75rem; text-align: center; }
-  .bh-logo { font-size: 24px; font-weight: 600; color: #111; letter-spacing: -0.5px; display: block; }
+  .bh-logo { font-size: 24px; font-weight: 600; color: #111; letter-spacing: -0.5px; }
   .bh-title { font-size: 13px; font-weight: 400; color: #999; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
-  .bh-sub { font-size: 13px; color: #888; margin-top: 2px; }
-  .zone-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; }
-  .zone-tab { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #888; font-size: 13px; cursor: pointer; text-align: center; transition: all 0.15s; }
-  .zone-tab:hover { border-color: #aaa; color: #333; }
-  .zone-tab.active { border: 2px solid #111; color: #111; font-weight: 600; }
-  .field-block { margin-bottom: 1.25rem; }
+
+  /* Pasos */
+  .step { margin-bottom: 1.25rem; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .step-title { font-size: 20px; font-weight: 600; color: #111; margin-bottom: 14px; }
   .field-label { font-size: 13px; color: #666; margin-bottom: 6px; display: block; font-weight: 500; }
-  .field-hint { font-size: 12px; color: #aaa; margin-top: 5px; }
+  .field-hint  { font-size: 12px; color: #aaa; margin-top: 5px; }
+
+  /* Buscador */
   .search-wrap { position: relative; }
   .search-wrap input[type=text] { width: 100%; padding: 11px 14px; font-size: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; transition: border 0.15s; }
   .search-wrap input[type=text]:focus { border-color: #111; }
@@ -26,22 +30,29 @@
   .dropdown.open { display: block; }
   .drop-item { padding: 10px 14px; font-size: 14px; cursor: pointer; color: #111; display: flex; justify-content: space-between; align-items: center; }
   .drop-item:hover { background: #f5f5f3; }
-  .drop-price { font-size: 13px; color: #888; }
-  .qty-row { display: flex; align-items: center; gap: 14px; }
-  .qty-btn { width: 38px; height: 38px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; line-height: 1; }
-  .qty-btn:hover { background: #f5f5f3; }
-  .qty-num { font-size: 20px; font-weight: 600; min-width: 24px; text-align: center; color: #111; }
+  .drop-badge { font-size: 11px; color: #888; background: #f0f0f0; padding: 2px 7px; border-radius: 10px; }
+
+  /* Badge zona */
+  .zona-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; margin-top: 10px; }
+  .zona-caba  { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .zona-gba   { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .zona-int   { background: #fefce8; color: #a16207; border: 1px solid #fde68a; }
+
+  /* Radio subida */
   .radio-group { display: flex; flex-direction: column; gap: 8px; }
   .radio-option { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; background: #fff; transition: border 0.15s; }
   .radio-option:hover { border-color: #aaa; }
   .radio-option.selected { border: 2px solid #111; }
   .radio-option input[type=radio] { margin-top: 3px; flex-shrink: 0; cursor: pointer; accent-color: #111; }
   .radio-label { font-size: 14px; color: #111; font-weight: 500; }
-  .radio-sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .radio-sub   { font-size: 12px; color: #888; margin-top: 2px; }
+
+  /* Pisos */
   .pisos-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-left: 28px; }
-  .pisos-input { width: 70px; padding: 7px 10px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; }
+  .pisos-input { width: 70px; padding: 7px 10px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
   .pisos-input:focus { border-color: #111; }
-  .section-title { font-size: 13px; color: #666; margin-bottom: 8px; display: block; font-weight: 500; }
+
+  /* Instalaciones acordeón */
   .inst-toggle { width: 100%; padding: 12px 16px; background: #fff; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 500; color: #111; text-align: left; transition: border-color 0.15s; }
   .inst-toggle:hover { border-color: #aaa; }
   .inst-toggle.open { border: 1.5px solid #111; border-radius: 8px 8px 0 0; }
@@ -53,34 +64,47 @@
   .install-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; cursor: pointer; background: #fff; transition: border 0.15s; }
   .install-card:hover { border-color: #aaa; }
   .install-card.selected { border: 2px solid #111; }
-  .install-name { font-size: 13px; font-weight: 600; color: #111; }
+  .install-name   { font-size: 13px; font-weight: 600; color: #111; }
   .install-detail { font-size: 11px; color: #888; margin-top: 2px; }
   .install-qty-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
   .install-qty-btn { width: 28px; height: 28px; border: 1px solid #ddd; border-radius: 6px; background: #f5f5f3; color: #111; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .install-qty-num { font-size: 14px; font-weight: 600; min-width: 18px; text-align: center; color: #111; }
-  .compra-input-wrap { display: flex; align-items: center; gap: 8px; }
+
+  /* Compra input */
+  .compra-wrap { display: flex; align-items: center; gap: 8px; }
   .compra-input { width: 100%; padding: 11px 14px; font-size: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fff; color: #111; outline: none; }
   .compra-input:focus { border-color: #111; }
+
+  /* Info box */
+  .info-box { background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #92400e; line-height: 1.5; margin-top: 10px; }
+  .info-box-blue { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #1e40af; line-height: 1.5; margin-top: 10px; }
+
+  /* Divider */
   .divider { border: none; border-top: 1px solid #eee; margin: 1.25rem 0; }
+
+  /* Resultado */
   .result-card { background: #f5f5f3; border-radius: 12px; padding: 1.25rem; }
   .result-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: 14px; color: #666; padding: 5px 0; gap: 12px; }
   .result-row.total { font-size: 18px; font-weight: 700; color: #111; margin-top: 8px; padding-top: 10px; border-top: 1px solid #ddd; }
   .result-label { color: #666; font-size: 13px; }
   .result-val { text-align: right; flex-shrink: 0; font-weight: 500; color: #111; }
   .result-val.muted { color: #aaa; font-style: italic; font-size: 13px; font-weight: 400; }
+
+  /* Banner peaje */
   .banner { display: flex; align-items: flex-start; gap: 8px; border-radius: 8px; padding: 10px 12px; margin-top: 10px; }
   .banner-warn { background: #fffbeb; border: 1px solid #f59e0b; }
-  .banner-info { background: #eff6ff; border: 1px solid #93c5fd; }
   .banner-text-warn { font-size: 13px; color: #92400e; line-height: 1.5; }
-  .banner-text-info { font-size: 13px; color: #1e40af; line-height: 1.5; }
+
+  /* Botón */
+  .bh-btn { display: block; width: 100%; margin-top: 16px; padding: 14px; background: #111; color: #fff; font-size: 15px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; letter-spacing: 0.2px; transition: background 0.15s; }
+  .bh-btn:hover { background: #333; }
+
   .info-note { font-size: 12px; color: #aaa; margin-top: 10px; line-height: 1.5; }
-  .bh-btn-solicitar { display: block; width: 100%; margin-top: 16px; padding: 14px; background: #111; color: #fff; font-size: 15px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; letter-spacing: 0.2px; transition: background 0.15s; }
-  .bh-btn-solicitar:hover { background: #333; }
   .empty-state { font-size: 14px; color: #aaa; text-align: center; padding: 1.5rem 0; }
+
   @media (max-width: 480px) {
     .card { padding: 1.25rem; }
     .install-grid { grid-template-columns: 1fr; }
-    .zone-tab { font-size: 12px; padding: 9px 6px; }
   }
 </style>
 </head>
@@ -91,204 +115,508 @@
     <span class="bh-title">Calculá tu envío</span>
   </div>
 
-  <p style="font-size:22px; font-weight:600; color:#111; margin-bottom:12px;">📍 Elegí tu ubicación</p>
-  <div class="zone-tabs">
-    <div class="zone-tab active" id="tab-caba-gba" onclick="switchZone('caba-gba')">CABA y GBA</div>
-    <div class="zone-tab" id="tab-expreso" onclick="switchZone('expreso')">Interior</div>
+  <!-- PASO 1: Localidad -->
+  <div class="step" id="step-loc">
+    <div class="step-title">📍 Contanos dónde vivís</div>
+    <div class="search-wrap">
+      <input type="text" id="loc-input" placeholder="Escribí tu barrio o ciudad..." autocomplete="off" />
+      <div class="dropdown" id="loc-dropdown"></div>
+    </div>
+    <div id="zona-badge-wrap"></div>
   </div>
 
-  <!-- SECCIÓN CABA / GBA -->
-  <div id="section-caba-gba">
-    <div class="field-block">
-      <label class="field-label">Localidad de entrega</label>
-      <div class="search-wrap">
-        <input type="text" id="loc-input" placeholder="Escribí tu barrio o ciudad..." autocomplete="off" />
-        <div class="dropdown" id="loc-dropdown"></div>
-      </div>
+  <!-- PASO 2a: Subida (solo CABA/GBA) -->
+  <div class="step" id="step-subida" style="display:none">
+    <div class="step-title">🏢 ¿Por dónde se subiría el mueble?</div>
+    <div class="radio-group">
+      <label class="radio-option selected" id="opt-ascensor">
+        <input type="radio" name="subida" value="ascensor" checked />
+        <div>
+          <div class="radio-label">Por ascensor</div>
+          <div class="radio-sub">Nuestro equipo de 2 personas sube el mueble y lo deja en el ambiente indicado</div>
+        </div>
+      </label>
+      <label class="radio-option" id="opt-escalera">
+        <input type="radio" name="subida" value="escalera" />
+        <div>
+          <div class="radio-label">Por escalera</div>
+          <div class="radio-sub">Adicional de $4.000 por piso, por mueble. Si el acceso es por escalera, también realizamos la subida.</div>
+        </div>
+      </label>
     </div>
-
-    <div class="field-block">
-      <label class="field-label">Cantidad de muebles</label>
-      <div class="qty-row">
-        <button class="qty-btn" id="qty-minus">−</button>
-        <span class="qty-num" id="qty-display">1</span>
-        <button class="qty-btn" id="qty-plus">+</button>
-      </div>
-      <div class="field-hint" id="qty-hint">Los estantes o accesorios no cuentan como muebles</div>
+    <div id="pisos-row" style="display:none" class="pisos-row">
+      <span style="font-size:13px;color:#666">Pisos a subir:</span>
+      <input type="number" class="pisos-input" id="pisos-input" value="1" min="1" max="20" />
+      <span style="font-size:13px;color:#666;margin-left:16px">Muebles:</span>
+      <input type="number" class="pisos-input" id="muebles-input" value="1" min="1" max="20" />
+      <span style="font-size:12px;color:#aaa">$4.000 × pisos × muebles</span>
     </div>
-
-    <div class="field-block">
-      <label class="field-label">¿Cómo se sube el mueble?</label>
-      <div class="radio-group">
-        <label class="radio-option selected" id="opt-ascensor">
-          <input type="radio" name="subida" value="ascensor" checked />
-          <div>
-            <div class="radio-label">Por ascensor</div>
-            <div class="radio-sub">Sin costo adicional — incluido en el precio de envío</div>
-          </div>
-        </label>
-        <label class="radio-option" id="opt-escalera">
-          <input type="radio" name="subida" value="escalera" />
-          <div>
-            <div class="radio-label">Por escalera</div>
-            <div class="radio-sub">Se cobra $4.000 adicionales por piso, por mueble</div>
-          </div>
-        </label>
-      </div>
-      <div id="pisos-row" style="display:none" class="pisos-row">
-        <span style="font-size:13px;color:#666">Pisos a subir:</span>
-        <input type="number" class="pisos-input" id="pisos-input" value="1" min="1" max="20" />
-        <span style="font-size:12px;color:#aaa">$4.000 × pisos × muebles</span>
-      </div>
-    </div>
-
-    <div class="field-block">
-      <button class="inst-toggle" id="inst-toggle" type="button" onclick="toggleInst()">
-        <span>¿Necesitás alguna instalación?</span>
-        <span class="inst-arrow" id="inst-arrow">▼</span>
-      </button>
-      <div class="inst-panel" id="inst-panel">
-        <div class="install-grid" id="install-grid"></div>
-      </div>
-    </div>
-
-    <hr class="divider" />
-    <div id="result-area-caba"><div class="empty-state">Seleccioná tu localidad para ver el total</div></div>
   </div>
 
-  <!-- SECCIÓN EXPRESO -->
-  <div id="section-expreso" style="display:none">
-    <div class="field-block">
-      <label class="field-label">Cantidad de muebles</label>
-      <div class="qty-row">
-        <button class="qty-btn" id="exp-qty-minus">−</button>
-        <span class="qty-num" id="exp-qty-display">1</span>
-        <button class="qty-btn" id="exp-qty-plus">+</button>
-      </div>
-      <div class="field-hint" id="exp-qty-hint">Los estantes o accesorios no cuentan como muebles</div>
+  <!-- PASO 2b: Interior info + embalaje -->
+  <div class="step" id="step-interior" style="display:none">
+    <div class="info-box">
+      💡 El costo de embalaje va en función al valor de tu compra. Si querés, podés cargar el valor de los muebles para cotizarlo exacto.
     </div>
-
-    <div class="field-block">
-      <label class="field-label">Valor de la compra</label>
-      <div class="compra-input-wrap">
+    <div style="margin-top:14px">
+      <label class="field-label">Valor de la compra <span style="color:#aaa;font-weight:400">(opcional)</span></label>
+      <div class="compra-wrap">
         <input type="text" class="compra-input" id="compra-input" placeholder="$ 0" />
       </div>
-
     </div>
+    <div class="info-box-blue" style="margin-top:12px">
+      🚚 Si querés que te recomendemos expresos que vayan a tu localidad, consultanos y con gusto te asesoraremos.
+    </div>
+  </div>
 
+  <!-- PASO 3: Instalaciones (solo CABA/GBA) -->
+  <div class="step" id="step-inst" style="display:none">
+    <button class="inst-toggle" id="inst-toggle" type="button" onclick="toggleInst()">
+      <span>¿Necesitás alguna instalación?</span>
+      <span class="inst-arrow" id="inst-arrow">▼</span>
+    </button>
+    <div class="inst-panel" id="inst-panel">
+      <div class="install-grid" id="install-grid"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="result-wrap" style="display:none">
     <hr class="divider" />
-    <div id="result-area-expreso"><div class="empty-state">Ingresá la cantidad de muebles y el valor de tu compra</div></div>
+    <div id="result-area"></div>
   </div>
 </div>
 
 <script>
-// ─── DATOS ───────────────────────────────────────────────
-// Para actualizar precios: modificá el número a la derecha de cada localidad
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DATOS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const LOCALIDADES = {
-  "CABA": 55000,
-  // Barrios de CABA — todos con precio CABA
-  "AGRONOMIA": 55000, "ALMAGRO": 55000, "BALVANERA": 55000, "BARRACAS": 55000,
-  "BELGRANO": 55000, "BOEDO": 55000, "CABALLITO": 55000, "CHACARITA": 55000,
-  "COGHLAN": 55000, "COLEGIALES": 55000, "CONSTITUCION": 55000, "FLORES": 55000,
-  "FLORESTA": 55000, "LA BOCA": 55000, "LA PATERNAL": 55000, "LINIERS": 55000,
-  "MATADEROS": 55000, "MONTE CASTRO": 55000, "MONTSERRAT": 55000, "NUEVA POMPEYA": 55000,
-  "NUÑEZ": 55000, "PALERMO": 55000, "PARQUE AVELLANEDA": 55000, "PARQUE CHACABUCO": 55000,
-  "PARQUE CHAS": 55000, "PARQUE PATRICIOS": 55000, "PATERNAL": 55000, "PUERTO MADERO": 55000,
-  "RECOLETA": 55000, "RETIRO": 55000, "SAAVEDRA": 55000, "SAN CRISTOBAL": 55000,
-  "SAN NICOLAS": 55000, "SAN TELMO": 55000, "VELEZ SARSFIELD": 55000, "VERSALLES": 55000,
-  "VILLA CRESPO": 55000, "VILLA DEL PARQUE": 55000, "VILLA DEVOTO": 55000,
-  "VILLA GRAL. MITRE": 55000, "VILLA LUGANO": 55000, "VILLA LURO": 55000,
-  "VILLA ORTUZAR": 55000, "VILLA PUEYRREDON": 55000, "VILLA REAL": 55000,
-  "VILLA RIACHUELO": 55000, "VILLA SANTA RITA": 55000, "VILLA SOLDATI": 55000,
-  "VILLA URQUIZA": 55000, "VILLA DEL PARQUE": 55000, "ALEJANDRO KORN": 94000, "ACASSUSO": 77000, "ADROGUE": 77000,
-  "ALDO BONZI": 83000, "AVELLANEDA": 77000, "BANFIELD": 77000, "BECCAR": 77000,
-  "BELLA VISTA": 83000, "BENAVIDEZ": 88000, "BERAZATEGUI": 77000, "BERISO": 88000,
-  "BERNAL": 77000, "BOULOGNE SUR MED": 77000, "BRANDSEN": 110000, "BURZACO": 83000,
-  "CAMPANA": 132000, "CANNING": 88000, "CAÑUELAS": 99000, "CARAPACHAY": 77000,
-  "CASEROS": 77000, "CASTELAR": 83000, "CITY BELL": 88000, "CIUDAD EVITA": 83000,
-  "CIUDAD JARDIN": 77000, "CIUDADELA": 77000, "DEL VISO": 83000, "DON BOSCO": 77000,
-  "DON TORCUATO": 77000, "EL PALOMAR": 83000, "EL TALAR": 83000, "ENSENADA": 93000,
-  "ESCOBAR": 93000, "ESPELETA": 77000, "ETCHEVERRY": 93000,
-  "EXALTACIÓN DE LA CRUZ": 122000, "EZEIZA": 88000, "FLORENCIO VARELA": 77000,
-  "FLORIDA": 77000, "GARIN": 88000, "GERLI": 77000, "GLEW": 83000,
-  "GONNET": 88000, "GONZALEZ CATAN": 88000, "GRAL. PACHECO": 83000,
-  "GRAL. RODRIGUEZ": 88000, "GRAND BOURG": 83000, "GUERNICA": 88000,
-  "GUILLON": 83000, "HAEDO": 77000, "HUDSON": 77000, "HURLINGHAM": 83000,
-  "ING. BUDGE": 77000, "ING. MASCHWITZ": 88000, "ITUZAINGO": 83000,
-  "JOSE C.PAZ": 88000, "JOSE LEON SUARES": 77000, "LA LUCILA": 77000,
-  "LA PLATA": 93000, "LA REJA": 83000, "LA UNION": 88000, "LAFERRERE": 88000,
-  "LANUS": 77000, "LOMA HERMOSA": 77000, "LOMAS DE ZAMORA": 77000,
-  "LOMAS DEL MIRADOR": 77000, "LONGCHAMPS": 77000, "LOS CARDALES": 126000,
-  "LOS HORNOS": 88000, "LOS POLVORINES": 77000, "LUJAN": 120000,
-  "MARCOS PAZ": 104000, "MARMOL": 77000, "MARTELLI": 77000,
-  "MARTIN CORONADO": 83000, "MARTINEZ": 77000, "MERCEDES": 165000,
-  "MERLO": 83000, "MONTE GRANDE": 83000, "MORENO": 83000, "MORON": 83000,
-  "MUNIZ": 83000, "MUNRO": 77000, "NORDELTA": 93000, "OLIVOS": 77000,
-  "PILAR": 93000, "PLATANOS": 77000, "QUILMES": 77000,
-  "REMEDIOS DE ESCALADA": 77000, "RAMOS MEJIA": 77000, "RANELAGH": 77000,
-  "RINGUELET": 88000, "SAENZ PEÑA": 77000, "SAN ANTONIO PADUA": 77000,
-  "SAN FERNANDO": 77000, "SAN ISIDRO": 77000, "SAN JUSTO": 77000,
-  "SAN MARTIN": 77000, "SAN MIGUEL": 83000, "SAN VICENTE": 93000,
-  "SANTOS LUGARES": 77000, "SARANDI": 77000, "TABLADA": 77000,
-  "TAPIALES": 83000, "TEMPERLEY": 77000, "TIGRE (no Nordelta)": 83000,
-  "TOLOSA": 88000, "TORTUGUITAS": 83000, "TRISTAN SUAREZ": 88000,
-  "TURDERA": 77000, "VICENTE LOPEZ": 77000, "VICTORIA": 77000,
-  "VILLA ADELINA": 77000, "VILLA BALLESTER": 77000, "VILLA CELINA": 77000,
-  "VILLA DOMINICO": 77000, "VILLA ELISA": 83000, "VILLA MADERO": 77000,
-  "VIRREY DEL PINO": 88000, "WILDE": 77000, "ZARATE": 148000
+  // CABA — precio base
+  "CABA": 60000,
+  "AGRONOMIA": 60000, "ALMAGRO": 60000, "BALVANERA": 60000, "BARRACAS": 60000,
+  "BELGRANO": 60000, "BOEDO": 60000, "CABALLITO": 60000, "CHACARITA": 60000,
+  "COGHLAN": 60000, "COLEGIALES": 60000, "CONSTITUCION": 60000, "FLORES": 60000,
+  "FLORESTA": 60000, "LA BOCA": 60000, "LA PATERNAL": 60000, "LINIERS": 60000,
+  "MATADEROS": 60000, "MONTE CASTRO": 60000, "MONTSERRAT": 60000, "NUEVA POMPEYA": 60000,
+  "NUÑEZ": 60000, "PALERMO": 60000, "PARQUE AVELLANEDA": 60000, "PARQUE CHACABUCO": 60000,
+  "PARQUE CHAS": 60000, "PARQUE PATRICIOS": 60000, "PATERNAL": 60000, "PUERTO MADERO": 60000,
+  "RECOLETA": 60000, "RETIRO": 60000, "SAAVEDRA": 60000, "SAN CRISTOBAL": 60000,
+  "SAN NICOLAS": 60000, "SAN TELMO": 60000, "VELEZ SARSFIELD": 60000, "VERSALLES": 60000,
+  "VILLA CRESPO": 60000, "VILLA DEL PARQUE": 60000, "VILLA DEVOTO": 60000,
+  "VILLA GRAL. MITRE": 60000, "VILLA LUGANO": 60000, "VILLA LURO": 60000,
+  "VILLA ORTUZAR": 60000, "VILLA PUEYRREDON": 60000, "VILLA REAL": 60000,
+  "VILLA RIACHUELO": 60000, "VILLA SANTA RITA": 60000, "VILLA SOLDATI": 60000,
+  "VILLA URQUIZA": 60000,
+  // GBA
+  "ALEJANDRO KORN": 99000, "ACASSUSO": 82000, "ADROGUE": 82000,
+  "ALDO BONZI": 88000, "AVELLANEDA": 82000, "BANFIELD": 82000, "BECCAR": 82000,
+  "BELLA VISTA": 88000, "BENAVÍDEZ": 93000, "BERAZATEGUI": 82000, "BERISSO": 93000,
+  "BERNAL": 82000, "BOULOGNE SUR MER": 82000, "BRANDSEN": 115000, "BURZACO": 88000,
+  "CAMPANA": 137000, "CANNING": 93000, "CAÑUELAS": 104000, "CARAPACHAY": 82000,
+  "CASEROS": 82000, "CASTELAR": 88000, "CITY BELL": 93000, "CIUDAD EVITA": 88000,
+  "CIUDAD JARDÍN": 82000, "CIUDADELA": 82000, "DEL VISO": 88000, "DON BOSCO": 82000,
+  "DON TORCUATO": 82000, "EL PALOMAR": 88000, "EL TALAR": 88000, "ENSENADA": 98000,
+  "ESCOBAR": 98000, "ESPELETA": 82000, "ETCHEVERRY": 98000,
+  "EXALTACION DE LA CRUZ": 127000, "EZEIZA": 93000, "FLORENCIO VARELA": 82000,
+  "FLORIDA": 82000, "GARIN": 93000, "GERLI": 82000, "GLEW": 88000,
+  "GONNET": 93000, "GONZALEZ CATAN": 93000, "GRAL. PACHECO": 88000,
+  "GRAL. RODRIGUEZ": 93000, "GRAND BOURG": 88000, "GUERNICA": 93000,
+  "GUILLÓN": 88000, "HAEDO": 82000, "HUDSON": 82000, "HURLINGHAM": 88000,
+  "ING. BUDGE": 82000, "ING. MASCHWITZ": 93000, "ITUZAINGO": 88000,
+  "JOSE C.PAZ": 93000, "JOSE LEON SUAREZ": 82000, "LA LUCILA": 82000,
+  "LA PLATA": 98000, "LA REJA": 88000, "LA UNION": 93000, "LAFERRERE": 93000,
+  "LANUS": 82000, "LOMA HERMOSA": 82000, "LOMAS DE ZAMORA": 82000,
+  "LOMAS DEL MIRADOR": 82000, "LONGCHAMPS": 82000, "LOS CARDALES": 131000,
+  "LOS HORNOS": 93000, "LOS POLVORINES": 82000, "LUJAN": 125000,
+  "MARCOS PAZ": 109000, "MARMOL": 82000, "MARTELLI": 82000,
+  "MARTIN CORONADO": 88000, "MARTINEZ": 82000, "MERCEDES": 170000,
+  "MERLO": 88000, "MONTE GRANDE": 88000, "MORENO": 88000, "MORON": 88000,
+  "MUNIZ": 88000, "MUNRO": 82000, "NORDELTA": 98000, "OLIVOS": 82000,
+  "PILAR": 98000, "PLATANOS": 82000, "QUILMES": 82000,
+  "REMEDIOS DE ESCALADA": 82000, "RAMOS MEJIA": 82000, "RANELAGH": 82000,
+  "RINGUELÉT": 93000, "SAENZ PEÑA": 82000, "SAN ANTONIO DE PADUA": 82000,
+  "SAN FERNANDO": 82000, "SAN ISIDRO": 82000, "SAN JUSTO": 82000,
+  "SAN MARTIN": 82000, "SAN MIGUEL": 88000, "SAN VICENTE": 98000,
+  "SANTOS LUGARES": 82000, "SARANDI": 82000, "TABLADA": 82000,
+  "TAPIALES": 88000, "TEMPERLEY": 82000, "TIGRE": 88000,
+  "TOLOSA": 93000, "TORTUGUITAS": 88000, "TRISTAN SUAREZ": 93000,
+  "TURDERA": 82000, "VICENTE LOPEZ": 82000, "VICTORIA": 82000,
+  "VILLA ADELINA": 82000, "VILLA BALLESTER": 82000, "VILLA CELINA": 82000,
+  "VILLA DOMINICO": 82000, "VILLA ELISA": 88000, "VILLA MADERO": 82000,
+  "VIRREY DEL PINO": 93000, "WILDE": 82000, "ZARATE": 153000,
+
+  // ── INTERIOR ──
+  // Córdoba
+  "CORDOBA": 0, "RIO CUARTO": 0, "VILLA MARIA": 0, "VILLA NUEVA": 0, "ALEJANDRO ROCA": 0,
+  // Santa Fe
+  "ROSARIO": 0, "SANTA FE": 0, "RAFAELA": 0, "RECONQUISTA": 0, "FUNES": 0,
+  // Entre Ríos
+  "PARANA": 0, "CONCORDIA": 0, "GUALEGUAYCHU": 0, "CONCEPCION DEL URUGUAY": 0,
+  "VICTORIA ER": 0, "COLON ER": 0, "VILLA ELISA ER": 0, "SAN SALVADOR ER": 0,
+  // Corrientes
+  "CORRIENTES": 0, "GOYA": 0, "PASO DE LOS LIBRES": 0, "MONTE CASEROS": 0,
+  // Tucumán
+  "SAN MIGUEL DE TUCUMAN": 0, "YERBA BUENA": 0, "CONCEPCION TUCUMAN": 0,
+  // Salta
+  "SALTA": 0, "SAN RAMON DE LA NUEVA ORAN": 0, "TARTAGAL": 0,
+  // Jujuy
+  "SAN SALVADOR DE JUJUY": 0, "SAN PEDRO DE JUJUY": 0, "PALPALA": 0,
+  // Santiago del Estero
+  "SANTIAGO DEL ESTERO": 0, "LA BANDA": 0, "TERMAS DE RIO HONDO": 0,
+  // Catamarca
+  "SAN FERNANDO DEL VALLE DE CATAMARCA": 0, "VALLE VIEJO": 0, "BELEN": 0,
+  // La Rioja
+  "LA RIOJA": 0, "CHILECITO": 0, "AIMOGASTA": 0,
+  // Mendoza
+  "MENDOZA": 0, "SAN RAFAEL": 0, "GODOY CRUZ": 0, "GENERAL SAN MARTIN MENDOZA": 0, "JUNIN MENDOZA": 0,
+  // San Juan
+  "SAN JUAN": 0, "RAWSON SJ": 0, "CHIMBAS": 0,
+  // San Luis
+  "SAN LUIS": 0, "VILLA MERCEDES": 0, "MERLO SL": 0,
+  // Chaco
+  "RESISTENCIA": 0, "PRESIDENCIA ROQUE SAENZ PEÑA": 0, "VILLA ANGELA": 0,
+  // Misiones
+  "POSADAS": 0, "OBERA": 0, "PUERTO IGUAZU": 0,
+  // Formosa
+  "FORMOSA": 0, "CLORINDA": 0, "PIRANE": 0,
+  // La Pampa
+  "SANTA ROSA LP": 0, "GENERAL PICO": 0, "REALICO": 0,
+  // Neuquén
+  "NEUQUEN": 0, "CUTRAL CO": 0, "SAN MARTIN DE LOS ANDES": 0, "VILLA LA ANGOSTURA": 0,
+  // Río Negro
+  "SAN CARLOS DE BARILOCHE": 0, "GENERAL ROCA": 0, "CIPOLLETTI": 0, "VIEDMA": 0,
+  // Chubut
+  "COMODORO RIVADAVIA": 0, "TRELEW": 0, "PUERTO MADRYN": 0, "ESQUEL": 0, "RADA TILLY": 0, "PLAYA UNION": 0,
+  // Santa Cruz
+  "RIO GALLEGOS": 0, "CALETA OLIVIA": 0, "EL CALAFATE": 0,
+  // Tierra del Fuego
+  "RIO GRANDE TDF": 0, "USHUAIA": 0, "TOLHUIN": 0,
+
+  // ── PROVINCIAS (búsqueda directa) ──
+  "PROVINCIA CORDOBA": 0, "PROVINCIA SANTA FE": 0, "PROVINCIA ENTRE RIOS": 0,
+  "PROVINCIA CORRIENTES": 0, "PROVINCIA TUCUMAN": 0, "PROVINCIA SALTA": 0,
+  "PROVINCIA JUJUY": 0, "PROVINCIA SANTIAGO DEL ESTERO": 0, "PROVINCIA CATAMARCA": 0,
+  "PROVINCIA LA RIOJA": 0, "PROVINCIA MENDOZA": 0, "PROVINCIA SAN JUAN": 0,
+  "PROVINCIA SAN LUIS": 0, "PROVINCIA CHACO": 0, "PROVINCIA MISIONES": 0,
+  "PROVINCIA FORMOSA": 0, "PROVINCIA LA PAMPA": 0, "PROVINCIA NEUQUEN": 0,
+  "PROVINCIA RIO NEGRO": 0, "PROVINCIA CHUBUT": 0, "PROVINCIA SANTA CRUZ": 0,
+  "PROVINCIA TIERRA DEL FUEGO": 0
 };
 
-// Precios de instalación
-const INSTALACIONES = [
-  { id: "placard_c",  name: "Placard de Puerta Corrediza",  detail: "", price: 100000 },
-  { id: "placard_a",  name: "Placard de Puertas de Abrir",  detail: "", price: 80000  },
-  { id: "estante",    name: "Estante Flotante",              detail: "c/u", price: 50000 },
-  { id: "modulo",     name: "Módulo Colgante",               detail: "c/u", price: 50000 },
-  { id: "panel",      name: "Panel Colgante",                detail: "c/u", price: 50000 },
-  { id: "mdl_luz",    name: "Mesa de Luz Colgante",          detail: "c/u", price: 50000 },
-  { id: "respaldo",   name: "Respaldo Colgante",             detail: "",    price: 50000 },
-  { id: "silla",      name: "Sillas Importadas",               detail: "c/u", price: 20000 },
-];
+const PRECIO_CABA   = 60000;  // precio base CABA (también = precio flete interior)
+const FLETE_INT     = 65000;  // flete hasta el expreso para interior
 
-// Flete al depósito para envíos por expreso (precio CABA)
-const FLETE_DEPOSITO = 60000;
+// Qué zona es cada precio
+const CABA_BARRIOS = new Set([
+  "CABA","AGRONOMIA","ALMAGRO","BALVANERA","BARRACAS","BELGRANO","BOEDO","CABALLITO",
+  "CHACARITA","COGHLAN","COLEGIALES","CONSTITUCION","FLORES","FLORESTA","LA BOCA",
+  "LA PATERNAL","LINIERS","MATADEROS","MONTE CASTRO","MONTSERRAT","NUEVA POMPEYA",
+  "NUÑEZ","PALERMO","PARQUE AVELLANEDA","PARQUE CHACABUCO","PARQUE CHAS",
+  "PARQUE PATRICIOS","PATERNAL","PUERTO MADERO","RECOLETA","RETIRO","SAAVEDRA",
+  "SAN CRISTOBAL","SAN NICOLAS","SAN TELMO","VELEZ SARSFIELD","VERSALLES",
+  "VILLA CRESPO","VILLA DEL PARQUE","VILLA DEVOTO","VILLA GRAL. MITRE","VILLA LUGANO",
+  "VILLA LURO","VILLA ORTUZAR","VILLA PUEYRREDON","VILLA REAL","VILLA RIACHUELO",
+  "VILLA SANTA RITA","VILLA SOLDATI","VILLA URQUIZA"
+]);
 
-// ─── LÓGICA ──────────────────────────────────────────────
-// 1er mueble = precio base · Cada adicional suma 5% del base
-function calcEnvio(base, cantidad) {
-  const ajustado = base + 5000;
-  return ajustado + base * 0.05 * (cantidad - 1);
+const GBA_LOCALIDADES = new Set([
+  "ALEJANDRO KORN","ACASSUSO","ADROGUE","ALDO BONZI","AVELLANEDA","BANFIELD","BECCAR",
+  "BELLA VISTA","BENAVÍDEZ","BERAZATEGUI","BERISSO","BERNAL","BOULOGNE SUR MER",
+  "BRANDSEN","BURZACO","CAMPANA","CANNING","CAÑUELAS","CARAPACHAY","CASEROS","CASTELAR",
+  "CITY BELL","CIUDAD EVITA","CIUDAD JARDÍN","CIUDADELA","DEL VISO","DON BOSCO",
+  "DON TORCUATO","EL PALOMAR","EL TALAR","ENSENADA","ESCOBAR","ESPELETA","ETCHEVERRY",
+  "EXALTACION DE LA CRUZ","EZEIZA","FLORENCIO VARELA","FLORIDA","GARIN","GERLI","GLEW",
+  "GONNET","GONZALEZ CATAN","GRAL. PACHECO","GRAL. RODRIGUEZ","GRAND BOURG","GUERNICA",
+  "GUILLÓN","HAEDO","HUDSON","HURLINGHAM","ING. BUDGE","ING. MASCHWITZ","ITUZAINGO",
+  "JOSE C.PAZ","JOSE LEON SUAREZ","LA LUCILA","LA PLATA","LA REJA","LA UNION",
+  "LAFERRERE","LANUS","LOMA HERMOSA","LOMAS DE ZAMORA","LOMAS DEL MIRADOR","LONGCHAMPS",
+  "LOS CARDALES","LOS HORNOS","LOS POLVORINES","LUJAN","MARCOS PAZ","MARMOL","MARTELLI",
+  "MARTIN CORONADO","MARTINEZ","MERCEDES","MERLO","MONTE GRANDE","MORENO","MORON",
+  "MUNIZ","MUNRO","NORDELTA","OLIVOS","PILAR","PLATANOS","QUILMES",
+  "REMEDIOS DE ESCALADA","RAMOS MEJIA","RANELAGH","RINGUELÉT","SAENZ PEÑA",
+  "SAN ANTONIO DE PADUA","SAN FERNANDO","SAN ISIDRO","SAN JUSTO","SAN MARTIN",
+  "SAN MIGUEL","SAN VICENTE","SANTOS LUGARES","SARANDI","TABLADA","TAPIALES",
+  "TEMPERLEY","TIGRE","TOLOSA","TORTUGUITAS","TRISTAN SUAREZ","TURDERA","VICENTE LOPEZ",
+  "VICTORIA","VILLA ADELINA","VILLA BALLESTER","VILLA CELINA","VILLA DOMINICO",
+  "VILLA ELISA","VILLA MADERO","VIRREY DEL PINO","WILDE","ZARATE"
+]);
+
+
+const PROVINCIA = {
+  // Córdoba
+  "CORDOBA": "Córdoba", "RIO CUARTO": "Córdoba", "VILLA MARIA": "Córdoba",
+  "VILLA NUEVA": "Córdoba", "ALEJANDRO ROCA": "Córdoba",
+  // Santa Fe
+  "ROSARIO": "Santa Fe", "SANTA FE": "Santa Fe", "RAFAELA": "Santa Fe",
+  "RECONQUISTA": "Santa Fe", "FUNES": "Santa Fe",
+  // Entre Ríos
+  "PARANA": "Entre Ríos", "CONCORDIA": "Entre Ríos", "GUALEGUAYCHU": "Entre Ríos",
+  "CONCEPCION DEL URUGUAY": "Entre Ríos", "VICTORIA ER": "Entre Ríos",
+  "COLON ER": "Entre Ríos", "VILLA ELISA ER": "Entre Ríos", "SAN SALVADOR ER": "Entre Ríos",
+  // Corrientes
+  "CORRIENTES": "Corrientes", "GOYA": "Corrientes",
+  "PASO DE LOS LIBRES": "Corrientes", "MONTE CASEROS": "Corrientes",
+  // Tucumán
+  "SAN MIGUEL DE TUCUMAN": "Tucumán", "YERBA BUENA": "Tucumán",
+  "CONCEPCION TUCUMAN": "Tucumán",
+  // Salta
+  "SALTA": "Salta", "SAN RAMON DE LA NUEVA ORAN": "Salta", "TARTAGAL": "Salta",
+  // Jujuy
+  "SAN SALVADOR DE JUJUY": "Jujuy", "SAN PEDRO DE JUJUY": "Jujuy", "PALPALA": "Jujuy",
+  // Santiago del Estero
+  "SANTIAGO DEL ESTERO": "Santiago del Estero", "LA BANDA": "Santiago del Estero",
+  "TERMAS DE RIO HONDO": "Santiago del Estero",
+  // Catamarca
+  "SAN FERNANDO DEL VALLE DE CATAMARCA": "Catamarca",
+  "VALLE VIEJO": "Catamarca", "BELEN": "Catamarca",
+  // La Rioja
+  "LA RIOJA": "La Rioja", "CHILECITO": "La Rioja", "AIMOGASTA": "La Rioja",
+  // Mendoza
+  "MENDOZA": "Mendoza", "SAN RAFAEL": "Mendoza", "GODOY CRUZ": "Mendoza",
+  "GENERAL SAN MARTIN MENDOZA": "Mendoza", "JUNIN MENDOZA": "Mendoza",
+  // San Juan
+  "SAN JUAN": "San Juan", "RAWSON SJ": "San Juan", "CHIMBAS": "San Juan",
+  // San Luis
+  "SAN LUIS": "San Luis", "VILLA MERCEDES": "San Luis", "MERLO SL": "San Luis",
+  // Chaco
+  "RESISTENCIA": "Chaco", "PRESIDENCIA ROQUE SAENZ PEÑA": "Chaco", "VILLA ANGELA": "Chaco",
+  // Misiones
+  "POSADAS": "Misiones", "OBERA": "Misiones", "PUERTO IGUAZU": "Misiones",
+  // Formosa
+  "FORMOSA": "Formosa", "CLORINDA": "Formosa", "PIRANE": "Formosa",
+  // La Pampa
+  "SANTA ROSA LP": "La Pampa", "GENERAL PICO": "La Pampa", "REALICO": "La Pampa",
+  // Neuquén
+  "NEUQUEN": "Neuquén", "CUTRAL CO": "Neuquén",
+  "SAN MARTIN DE LOS ANDES": "Neuquén", "VILLA LA ANGOSTURA": "Neuquén",
+  // Río Negro
+  "SAN CARLOS DE BARILOCHE": "Río Negro", "GENERAL ROCA": "Río Negro",
+  "CIPOLLETTI": "Río Negro", "VIEDMA": "Río Negro",
+  // Chubut
+  "COMODORO RIVADAVIA": "Chubut", "TRELEW": "Chubut", "PUERTO MADRYN": "Chubut",
+  "ESQUEL": "Chubut", "RADA TILLY": "Chubut", "PLAYA UNION": "Chubut",
+  // Santa Cruz
+  "RIO GALLEGOS": "Santa Cruz", "CALETA OLIVIA": "Santa Cruz", "EL CALAFATE": "Santa Cruz",
+  // Tierra del Fuego
+  "RIO GRANDE TDF": "Tierra del Fuego", "USHUAIA": "Tierra del Fuego", "TOLHUIN": "Tierra del Fuego",
+  // Provincias directas
+  "PROVINCIA CORDOBA": "Córdoba", "PROVINCIA SANTA FE": "Santa Fe",
+  "PROVINCIA ENTRE RIOS": "Entre Ríos", "PROVINCIA CORRIENTES": "Corrientes",
+  "PROVINCIA TUCUMAN": "Tucumán", "PROVINCIA SALTA": "Salta",
+  "PROVINCIA JUJUY": "Jujuy", "PROVINCIA SANTIAGO DEL ESTERO": "Santiago del Estero",
+  "PROVINCIA CATAMARCA": "Catamarca", "PROVINCIA LA RIOJA": "La Rioja",
+  "PROVINCIA MENDOZA": "Mendoza", "PROVINCIA SAN JUAN": "San Juan",
+  "PROVINCIA SAN LUIS": "San Luis", "PROVINCIA CHACO": "Chaco",
+  "PROVINCIA MISIONES": "Misiones", "PROVINCIA FORMOSA": "Formosa",
+  "PROVINCIA LA PAMPA": "La Pampa", "PROVINCIA NEUQUEN": "Neuquén",
+  "PROVINCIA RIO NEGRO": "Río Negro", "PROVINCIA CHUBUT": "Chubut",
+  "PROVINCIA SANTA CRUZ": "Santa Cruz", "PROVINCIA TIERRA DEL FUEGO": "Tierra del Fuego",
+};
+
+
+function getZona(loc) {
+  if (CABA_BARRIOS.has(loc)) return 'caba';
+  if (GBA_LOCALIDADES.has(loc)) return 'gba';
+  if (loc in LOCALIDADES) return 'interior';
+  return 'interior';
 }
 
-let zone = 'caba-gba';
-let selectedLoc = null;
-let qty = 1;
-let subida = 'ascensor';
-let installQtys = {};
+const INSTALACIONES = [
+  { id: "placard_c", name: "Placard Puerta Corrediza", detail: "c/u", price: 105000 },
+  { id: "placard_a", name: "Placard Puertas de Abrir", detail: "c/u", price: 85000 },
+  { id: "estante",   name: "Estante Flotante",         detail: "c/u", price: 55000 },
+  { id: "modulo",    name: "Módulo Colgante",           detail: "c/u", price: 55000 },
+  { id: "panel",     name: "Panel Colgante",            detail: "c/u", price: 55000 },
+  { id: "mdl_luz",   name: "Mesa de Luz Colgante",      detail: "c/u", price: 55000 },
+  { id: "respaldo",  name: "Respaldo Colgante",         detail: "c/u", price: 55000 },
+  { id: "silla",     name: "Sillas Importadas",         detail: "c/u", price: 25000 },
+];
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ESTADO
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let selectedLoc  = null;
+let zona         = null;   // 'caba' | 'gba' | 'interior'
+let subida       = 'ascensor';
+let installQtys  = {};
 INSTALACIONES.forEach(i => installQtys[i.id] = 0);
-let expQty = 1;
 
 function fmt(n) { return '$' + Math.round(n).toLocaleString('es-AR'); }
 
 function capLoc(s) {
-  if (s === 'CABA') return 'CABA';
   return s.split(' ').map(function(w) {
     if (w === '') return '';
-    // Palabras cortas que van en minúscula (preposiciones)
-    var lower = ['DE', 'DEL', 'LA', 'LAS', 'LOS', 'EL', 'Y', 'SUR', 'MED'];
+    var lower = ['DE','DEL','LA','LAS','LOS','EL','Y','SUR','MED'];
     if (lower.indexOf(w) !== -1) return w.charAt(0) + w.slice(1).toLowerCase();
     return w.charAt(0) + w.slice(1).toLowerCase();
   }).join(' ');
 }
 
-function switchZone(z) {
-  zone = z;
-  document.getElementById('section-caba-gba').style.display = z === 'caba-gba' ? '' : 'none';
-  document.getElementById('section-expreso').style.display  = z === 'expreso'   ? '' : 'none';
-  document.getElementById('tab-caba-gba').classList.toggle('active', z === 'caba-gba');
-  document.getElementById('tab-expreso').classList.toggle('active',  z === 'expreso');
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// BUSCADOR
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const locInput  = document.getElementById('loc-input');
+const dropdown  = document.getElementById('loc-dropdown');
+
+function filterLocs(q) {
+  const uq = q.toUpperCase().trim();
+  if (!uq) return [];
+  return Object.keys(LOCALIDADES)
+    .filter(k => k.includes(uq))
+    .sort((a, b) => {
+      const ai = a.indexOf(uq), bi = b.indexOf(uq);
+      return ai - bi || a.localeCompare(b);
+    })
+    .slice(0, 12)
+    .map(k => [k, LOCALIDADES[k]]);
 }
 
+function zonaBadge(z, locName) {
+  const cls   = { caba: 'zona-caba', gba: 'zona-gba', interior: 'zona-int' };
+  const icons = { caba: '🏙️', gba: '🏘️', interior: '🗺️' };
+  const label = z === 'interior'
+    ? (PROVINCIA[locName] || 'Interior')
+    : (z === 'caba' ? 'CABA' : 'GBA');
+  return `<span class="zona-badge ${cls[z]}">${icons[z]} ${capLoc(locName)} — ${label}</span>`;
+}
+
+function getDropLabel(loc, zona) {
+  if (zona === 'caba') return 'CABA';
+  if (zona === 'gba') return 'GBA';
+  // Interior: mostrar provincia si la conocemos
+  return PROVINCIA[loc] || 'Interior';
+}
+
+function showDropdown(results) {
+  dropdown.innerHTML = '';
+  if (!results.length) { dropdown.classList.remove('open'); return; }
+  results.forEach(([loc, price]) => {
+    const z = getZona(loc);
+    const item = document.createElement('div');
+    item.className = 'drop-item';
+    item.innerHTML = `<span>${capLoc(loc)}</span><span class="drop-badge">${getDropLabel(loc, z)}</span>`;
+    item.addEventListener('click', () => {
+      selectedLoc = loc;
+      locInput.value = capLoc(loc);
+      dropdown.classList.remove('open');
+      onLocSelected();
+    });
+    dropdown.appendChild(item);
+  });
+  dropdown.classList.add('open');
+}
+
+// Si el usuario escribe algo que no está en la lista → zona = interior
+function tryInterior(q) {
+  const uq = q.toUpperCase().trim();
+  if (!uq) return;
+  // Si no matchea ninguna localidad conocida, aceptar como interior
+  const matches = Object.keys(LOCALIDADES).filter(k => k === uq);
+  if (matches.length === 0 && uq.length >= 3) {
+    selectedLoc = uq;
+    onLocSelected();
+    dropdown.classList.remove('open');
+  }
+}
+
+locInput.addEventListener('input', () => {
+  selectedLoc = null;
+  zona = null;
+  resetSteps();
+  showDropdown(filterLocs(locInput.value));
+});
+locInput.addEventListener('focus', () => {
+  if (locInput.value) showDropdown(filterLocs(locInput.value));
+});
+locInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    dropdown.classList.remove('open');
+    tryInterior(locInput.value);
+  }
+});
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-wrap')) dropdown.classList.remove('open');
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// FLUJO DE PASOS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function resetSteps() {
+  document.getElementById('zona-badge-wrap').innerHTML = '';
+  document.getElementById('step-subida').style.display  = 'none';
+  document.getElementById('step-interior').style.display = 'none';
+  document.getElementById('step-inst').style.display    = 'none';
+  document.getElementById('result-wrap').style.display  = 'none';
+  // reset instalaciones
+  INSTALACIONES.forEach(i => { installQtys[i.id] = 0; });
+  document.querySelectorAll('.install-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('[id^="qrow-"]').forEach(r => r.style.display = 'none');
+  // reset subida
+  subida = 'ascensor';
+  document.getElementById('opt-ascensor').classList.add('selected');
+  document.getElementById('opt-escalera').classList.remove('selected');
+  document.querySelector('input[value=ascensor]').checked = true;
+  document.getElementById('pisos-row').style.display = 'none';
+  document.getElementById('pisos-input').value = '1';
+  // cerrar acordeón
+  document.getElementById('inst-panel').classList.remove('open');
+  document.getElementById('inst-toggle').classList.remove('open');
+  document.getElementById('inst-arrow').classList.remove('open');
+  // reset compra
+  var ci = document.getElementById('compra-input');
+  if (ci) ci.value = '';
+}
+
+function onLocSelected() {
+  if (!selectedLoc) return;
+  zona = getZona(selectedLoc);
+
+  // Badge zona
+  document.getElementById('zona-badge-wrap').innerHTML = zonaBadge(zona, selectedLoc);
+
+  if (zona === 'caba' || zona === 'gba') {
+    document.getElementById('step-subida').style.display  = '';
+    document.getElementById('step-interior').style.display = 'none';
+    document.getElementById('step-inst').style.display    = '';
+  } else {
+    document.getElementById('step-subida').style.display  = 'none';
+    document.getElementById('step-interior').style.display = '';
+    document.getElementById('step-inst').style.display    = 'none';
+  }
+
+  document.getElementById('result-wrap').style.display = '';
+  renderResultado();
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SUBIDA
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.querySelectorAll('input[name=subida]').forEach(r => {
+  r.addEventListener('change', () => {
+    subida = r.value;
+    document.getElementById('opt-ascensor').classList.toggle('selected', subida === 'ascensor');
+    document.getElementById('opt-escalera').classList.toggle('selected', subida === 'escalera');
+    document.getElementById('pisos-row').style.display = subida === 'escalera' ? 'flex' : 'none';
+    renderResultado();
+  });
+});
+document.getElementById('pisos-input').addEventListener('input', renderResultado);
+document.getElementById('muebles-input').addEventListener('input', renderResultado);
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// COMPRA INPUT (interior)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+document.getElementById('compra-input').addEventListener('input', function() {
+  var raw = this.value.replace(/\D/g, '');
+  var num = parseInt(raw) || 0;
+  this.value = num > 0 ? '$ ' + num.toLocaleString('es-AR') : '';
+  renderResultado();
+});
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// INSTALACIONES
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function toggleInst() {
   var panel  = document.getElementById('inst-panel');
   var toggle = document.getElementById('inst-toggle');
@@ -307,7 +635,7 @@ function buildInstallGrid() {
     card.id = 'card-' + inst.id;
     card.innerHTML = `
       <div class="install-name">${inst.name}</div>
-      <div class="install-detail">${inst.detail} · ${fmt(inst.price)}</div>
+      <div class="install-detail">${inst.detail ? inst.detail + ' · ' : ''}${fmt(inst.price)}</div>
       <div class="install-qty-row" id="qrow-${inst.id}" style="display:none">
         <button class="install-qty-btn" data-id="${inst.id}" data-op="minus">−</button>
         <span class="install-qty-num" id="iqty-${inst.id}">1</span>
@@ -318,9 +646,9 @@ function buildInstallGrid() {
       const was = installQtys[inst.id] > 0;
       installQtys[inst.id] = was ? 0 : 1;
       card.classList.toggle('selected', !was);
-      document.getElementById('qrow-'+inst.id).style.display = was ? 'none' : 'flex';
-      if (!was) document.getElementById('iqty-'+inst.id).textContent = '1';
-      renderCabaGba();
+      document.getElementById('qrow-' + inst.id).style.display = was ? 'none' : 'flex';
+      if (!was) document.getElementById('iqty-' + inst.id).textContent = '1';
+      renderResultado();
     });
     grid.appendChild(card);
   });
@@ -329,233 +657,151 @@ function buildInstallGrid() {
     const id = e.target.dataset.id, op = e.target.dataset.op;
     installQtys[id] = op === 'plus' ? Math.min(20, installQtys[id]+1) : Math.max(1, installQtys[id]-1);
     document.getElementById('iqty-'+id).textContent = installQtys[id];
-    renderCabaGba();
+    renderResultado();
   });
 }
 
-const locInput  = document.getElementById('loc-input');
-const dropdown  = document.getElementById('loc-dropdown');
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// RENDER RESULTADO
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function renderResultado() {
+  if (!selectedLoc || !zona) return;
+  const el = document.getElementById('result-area');
 
-function filterLocs(q) {
-  const uq = q.toUpperCase().trim();
-  if (!uq) return [];
-  return Object.entries(LOCALIDADES)
-    .filter(([k]) => k.includes(uq))
-    .sort((a,b) => { const ai=a[0].indexOf(uq), bi=b[0].indexOf(uq); return ai-bi || a[0].localeCompare(b[0]); })
-    .slice(0, 12);
-}
+  if (zona === 'interior') {
+    // Flete fijo + embalaje opcional
+    const flete = FLETE_INT;
+    const raw = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
+    const compraVal = parseFloat(raw) || 0;
+    const embalaje = compraVal > 0 ? compraVal * 0.10 : 0;
+    const total = flete + embalaje;
 
-function showDropdown(results) {
-  dropdown.innerHTML = '';
-  if (!results.length) { dropdown.classList.remove('open'); return; }
-  results.forEach(([loc, price]) => {
-    const item = document.createElement('div');
-    item.className = 'drop-item';
-    item.innerHTML = `<span>${capLoc(loc)}</span>`;
-    item.addEventListener('click', () => {
-      selectedLoc = loc;
-      locInput.value = capLoc(loc);
-      dropdown.classList.remove('open');
-      renderCabaGba();
-    });
-    dropdown.appendChild(item);
-  });
-  dropdown.classList.add('open');
-}
-
-locInput.addEventListener('input',  () => { selectedLoc = null; showDropdown(filterLocs(locInput.value)); renderCabaGba(); });
-locInput.addEventListener('focus',  () => { if (locInput.value) showDropdown(filterLocs(locInput.value)); });
-document.addEventListener('click',  (e) => { if (!e.target.closest('.search-wrap')) dropdown.classList.remove('open'); });
-
-document.getElementById('qty-minus').addEventListener('click', () => { qty=Math.max(1,qty-1); document.getElementById('qty-display').textContent=qty; renderCabaGba(); });
-document.getElementById('qty-plus').addEventListener('click',  () => { qty=Math.min(20,qty+1); document.getElementById('qty-display').textContent=qty; renderCabaGba(); });
-
-document.querySelectorAll('input[name=subida]').forEach(r => {
-  r.addEventListener('change', () => {
-    subida = r.value;
-    document.getElementById('opt-ascensor').classList.toggle('selected', subida==='ascensor');
-    document.getElementById('opt-escalera').classList.toggle('selected', subida==='escalera');
-    document.getElementById('pisos-row').style.display = subida==='escalera' ? 'flex' : 'none';
-    renderCabaGba();
-  });
-});
-document.getElementById('pisos-input').addEventListener('input', renderCabaGba);
-
-document.getElementById('exp-qty-minus').addEventListener('click', () => { expQty=Math.max(1,expQty-1); document.getElementById('exp-qty-display').textContent=expQty; renderExpreso(); });
-document.getElementById('exp-qty-plus').addEventListener('click',  () => { expQty=Math.min(20,expQty+1); document.getElementById('exp-qty-display').textContent=expQty; renderExpreso(); });
-document.getElementById('compra-input').addEventListener('input', function() {
-  var raw = this.value.replace(/\D/g, '');
-  var num = parseInt(raw) || 0;
-  this.value = num > 0 ? '$ ' + num.toLocaleString('es-AR') : '';
-  renderExpreso();
-});
-
-function renderCabaGba() {
-  const el   = document.getElementById('result-area-caba');
-  const hint = document.getElementById('qty-hint');
-  if (selectedLoc && qty > 1) {
-    const _base = LOCALIDADES[selectedLoc];
-    const _extra = Math.round(_base * 0.05);
-    hint.textContent = `Cada mueble adicional suma $${_extra.toLocaleString('es-AR')} más al envío`;
-  } else {
-    hint.textContent = 'Los estantes o accesorios no cuentan como muebles';
-  }
-
-  if (!selectedLoc) { el.innerHTML='<div class="empty-state">Seleccioná tu localidad para ver el total</div>'; return; }
-
-  const base      = LOCALIDADES[selectedLoc];
-  const envioBase = calcEnvio(base, qty);
-  const esGBA     = LOCALIDADES[selectedLoc] > 55000;
-
-  let escaleraTotal = 0;
-  if (subida === 'escalera') {
-    const pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
-    escaleraTotal = 4000 * pisos * qty;
-  }
-
-  let installTotal = 0, installLines = [];
-  INSTALACIONES.forEach(inst => {
-    const q = installQtys[inst.id];
-    if (q > 0) { installTotal += inst.price*q; installLines.push({name:inst.name, q, subtotal:inst.price*q}); }
-  });
-
-  const total      = envioBase + escaleraTotal + installTotal;
-  const locDisplay = capLoc(selectedLoc);
-  const envioLabel = `Envío a ${locDisplay}`;
-
-  let html = `<div class="result-card">`;
-  html += `<div class="result-row"><span class="result-label">${envioLabel}</span><span class="result-val">${fmt(envioBase)}</span></div>`;
-  if (escaleraTotal > 0) {
-    const pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
-    html += `<div class="result-row"><span class="result-label">Adicional escalera (${pisos} ${pisos===1?'piso':'pisos'} × ${qty} mueble${qty>1?'s':''})</span><span class="result-val">${fmt(escaleraTotal)}</span></div>`;
-  }
-  installLines.forEach(l => {
-    html += `<div class="result-row"><span class="result-label">${l.name} × ${l.q}</span><span class="result-val">${fmt(l.subtotal)}</span></div>`;
-  });
-  html += `<div class="result-row total"><span>Costo del envío</span><span class="result-val">${fmt(total)}</span></div></div>`;
-  if (esGBA) html += `<div class="banner banner-warn"><span style="font-size:15px;flex-shrink:0">⚠</span><span class="banner-text-warn">El peaje no está incluido. Se abona aparte el día de la entrega.</span></div>`;
-  html += `<p class="info-note" style="color:#555;">El envío se puede abonar cuando recibís tu pedido. ¡Que lo disfrutes!</p>`;
-  html += `<button class="bh-btn-solicitar" onclick="solicitarEnvio()">Solicitar envío</button>`;
-  el.innerHTML = html;
-}
-
-function renderExpreso() {
-  const el   = document.getElementById('result-area-expreso');
-  const hint = document.getElementById('exp-qty-hint');
-  hint.textContent = 'Los estantes o accesorios no cuentan como muebles';
-
-  const flete     = calcEnvio(FLETE_DEPOSITO, expQty);
-  const compraVal = parseFloat(document.getElementById('compra-input').value.replace(/\./g, '').replace('$ ', '').replace(',', '.')) || 0;
-  const embalaje  = compraVal > 0 ? compraVal * 0.10 : 0;
-
-  let html = `<div class="result-card">`;
-  html += `<div class="result-row"><span class="result-label">Entrega en transporte</span><span class="result-val">${fmt(flete)}</span></div>`;
-  html += `<div class="result-row"><span class="result-label">Costo del embalaje</span><span class="result-val">${embalaje > 0 ? fmt(embalaje) : '$0'}</span></div>`;
-  html += `<div class="result-row"><span class="result-label">Valor del expreso</span><span class="result-val muted">A convenir</span></div>`;
-  html += `<div class="result-row total"><span>Subtotal (sin expreso)</span><span class="result-val">${fmt(flete+embalaje)}</span></div>`;
-  html += `</div>`;
-  html += `<div class="banner banner-info"><span style="font-size:15px;flex-shrink:0">ℹ</span><span class="banner-text-info">El costo del expreso se coordina con la empresa de transporte. Una vez confirmada tu compra, te orientamos con el proceso.</span></div>`;
-  html += `<p class="info-note" style="color:#555;">El envío se debe abonar cuando está listo el pedido.</p>`;
-  html += `<button class="bh-btn-solicitar" onclick="solicitarEnvio()">Solicitar envío</button>`;
-  el.innerHTML = html;
-}
-
-function solicitarEnvio() {
-  var isExpreso = zone === 'expreso';
-  var subtitulo = isExpreso ? 'Interior — Envío por Expreso' : 'CABA / GBA';
-
-  // ── Recopilar datos ───────────────────────────────────
-  var datosSrv = [], resumenEco = [], total = '', notasPeaje = false;
-
-  if (!isExpreso) {
-    if (!selectedLoc) { alert('Por favor seleccioná tu localidad primero.'); return; }
-    var base   = LOCALIDADES[selectedLoc];
-    var envio  = calcEnvio(base, qty);
-    var escTot = 0;
-    if (subida === 'escalera') {
-      var p = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
-      escTot = 4000 * p * qty;
+    let html = `<div class="result-card">`;
+    html += `<div class="result-row"><span class="result-label">Flete hasta el expreso</span><span class="result-val">${fmt(flete)}</span></div>`;
+    if (embalaje > 0) {
+      html += `<div class="result-row"><span class="result-label">Embalaje y Garantía del Mueble</span><span class="result-val">${fmt(embalaje)}</span></div>`;
+    } else {
+      html += `<div class="result-row"><span class="result-label">Embalaje y Garantía</span><span class="result-val muted">Cargá el valor de la compra</span></div>`;
     }
-    var instTot = 0, instLineas = [];
-    INSTALACIONES.forEach(function(i){
-      var q = installQtys[i.id];
-      if (q > 0) { instTot += i.price * q; instLineas.push(i.name + (q > 1 ? ' × ' + q : '')); }
-    });
-    var totalNum = envio + escTot + instTot;
-
-    datosSrv.push(['Localidad', capLoc(selectedLoc)]);
-    datosSrv.push(['Cantidad de muebles', qty + (qty === 1 ? ' mueble' : ' muebles')]);
-    datosSrv.push(['Modalidad de subida', subida === 'ascensor' ? 'Ascensor' : 'Escalera']);
-    if (instLineas.length) datosSrv.push(['Instalación adicional', instLineas.join(', ')]);
-
-    var envioSolo = calcEnvio(base, qty) + escTot;
-    if (envioSolo > 0)  resumenEco.push(['Envío', fmt(envioSolo)]);
-    if (instTot > 0)    resumenEco.push(['Instalación', fmt(instTot)]);
-    total = fmt(totalNum);
-    notasPeaje = (LOCALIDADES[selectedLoc] > 55000);
+    html += `<div class="result-row"><span class="result-label">Costo del expreso</span><span class="result-val muted">A coordinar</span></div>`;
+    html += `<div class="result-row total"><span>Subtotal (sin expreso)</span><span class="result-val">${fmt(total)}</span></div>`;
+    html += `</div>`;
+    html += `<p class="info-note" style="color:#555">El envío se abona cuando está listo el pedido.</p>`;
+    html += `<button class="bh-btn" onclick="solicitarEnvio()">Solicitar envío</button>`;
+    el.innerHTML = html;
 
   } else {
-    var compraRaw = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
-    var compraVal = parseFloat(compraRaw) || 0;
-    var flete     = calcEnvio(FLETE_DEPOSITO, expQty);
-    var embalaje  = compraVal > 0 ? compraVal * 0.10 : 0;
+    // CABA o GBA
+    const base = LOCALIDADES[selectedLoc] || PRECIO_CABA;
+    const esGBA = zona === 'gba';
 
-    datosSrv.push(['Cantidad de muebles', expQty + (expQty === 1 ? ' mueble' : ' muebles')]);
-    resumenEco.push(['Flete hasta el expreso', fmt(flete)]);
-    if (embalaje > 0) resumenEco.push(['Embalaje y Garantía', fmt(embalaje)]);
-    resumenEco.push(['Valor del expreso', 'A convenir']);
-    total = fmt(flete + embalaje);
+    let escaleraTot = 0;
+    if (subida === 'escalera') {
+      const pisos    = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+      const muebles  = Math.max(1, parseInt(document.getElementById('muebles-input').value)||1);
+      escaleraTot = 4000 * pisos * muebles;
+    }
+
+    let installTot = 0, installLines = [];
+    INSTALACIONES.forEach(inst => {
+      const q = installQtys[inst.id];
+      if (q > 0) { installTot += inst.price * q; installLines.push({ name: inst.name, q, sub: inst.price * q }); }
+    });
+
+    const total = base + escaleraTot + installTot;
+
+    let html = `<div class="result-card">`;
+    html += `<div class="result-row"><span class="result-label">Envío a ${capLoc(selectedLoc)}</span><span class="result-val">${fmt(base)}</span></div>`;
+    if (escaleraTot > 0) {
+      const pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+      html += `<div class="result-row"><span class="result-label">Adicional escalera (${pisos} ${pisos===1?'piso':'pisos'} × ${muebles} ${muebles===1?'mueble':'muebles'})</span><span class="result-val">${fmt(escaleraTot)}</span></div>`;
+    }
+    installLines.forEach(l => {
+      html += `<div class="result-row"><span class="result-label">${l.name} × ${l.q}</span><span class="result-val">${fmt(l.sub)}</span></div>`;
+    });
+    html += `<div class="result-row total"><span>Costo del envío</span><span class="result-val">${fmt(total)}</span></div>`;
+    html += `</div>`;
+    if (esGBA) {
+      html += `<div class="banner banner-warn"><span style="font-size:15px;flex-shrink:0">⚠</span><span class="banner-text-warn">El peaje no está incluido. Se abona aparte el día de la entrega.</span></div>`;
+    }
+    html += `<p class="info-note" style="color:#555">El envío se puede abonar cuando recibís tu pedido. ¡Que lo disfrutes!</p>`;
+    html += `<button class="bh-btn" onclick="solicitarEnvio()">Solicitar envío</button>`;
+    el.innerHTML = html;
   }
+}
 
-  // ── CANVAS ────────────────────────────────────────────
-  var W = 900, padX = 60;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SOLICITAR ENVÍO — JPG + WHATSAPP
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function solicitarEnvio() {
+  if (!selectedLoc || !zona) return;
+
   var C_DARK  = '#1e1e3a';
   var C_MID   = '#888888';
   var C_LIGHT = '#bbbbbb';
   var C_LINE  = '#e8e8ec';
   var C_BOX   = '#f0f0f8';
+  var W = 900, padX = 60;
 
-  var lineH   = 52;
-  var sep     = 24;
-  var boxH    = 110;
-  var notaH   = 32;
-  var footerH = 56;
-  var notas   = notasPeaje
+  var filas = [], total = '', notasPeaje = false;
+
+  if (zona === 'interior') {
+    var flete = FLETE_INT;
+    var raw = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
+    var compraVal = parseFloat(raw) || 0;
+    var embalaje = compraVal > 0 ? compraVal * 0.10 : 0;
+    filas.push(['Localidad', capLoc(selectedLoc)]);
+    filas.push(['Flete hasta el expreso', fmt(flete)]);
+    if (embalaje > 0) filas.push(['Embalaje y Garantía', fmt(embalaje)]);
+    filas.push(['Costo del expreso', 'A coordinar']);
+    total = fmt(flete + embalaje);
+  } else {
+    var base = LOCALIDADES[selectedLoc] || PRECIO_CABA;
+    var escTot = 0;
+    var pisos = 1;
+    if (subida === 'escalera') {
+      pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+      var muebles = Math.max(1, parseInt(document.getElementById('muebles-input').value)||1);
+      escTot = 4000 * pisos * muebles;
+    }
+    var instTot = 0, instLineas = [];
+    INSTALACIONES.forEach(function(i) {
+      var q = installQtys[i.id];
+      if (q > 0) { instTot += i.price * q; instLineas.push(i.name + (q > 1 ? ' × ' + q : '')); }
+    });
+    notasPeaje = zona === 'gba';
+    filas.push(['Localidad', capLoc(selectedLoc)]);
+    filas.push(['Modalidad de subida', subida === 'ascensor' ? 'Ascensor' : 'Escalera (' + pisos + ' pisos × ' + muebles + ' muebles)']);
+    if (instLineas.length) filas.push(['Instalación adicional', instLineas.join(', ')]);
+    filas.push(['Envío', fmt(base)]);
+    if (escTot > 0) filas.push(['Adicional escalera', fmt(escTot)]);
+    if (instTot > 0) filas.push(['Instalación', fmt(instTot)]);
+    if (notasPeaje) filas.push(['Peajes', 'No incluidos']);
+    total = fmt(base + escTot + instTot);
+  }
+
+  var notas = notasPeaje
     ? ['Valores en efectivo.', 'El valor no incluye seguros.', 'Peajes no incluidos — se abonan el día de la entrega.']
     : ['Valores en efectivo.', 'El valor no incluye seguros.'];
 
-  // Filas unificadas: datos + resumen juntos
-  var todasFilas = datosSrv.concat(resumenEco);
-
-  var H = (56 + 60 + sep
-    + 28 + sep
-    + todasFilas.length * lineH + sep
-    + boxH + sep
-    + 32 + notas.length * notaH + sep
-    + footerH + 32);
+  var lineH = 52, sep = 24, boxH = 110, notaH = 32, footerH = 56;
+  var H = (56 + 60 + sep + 28 + sep + filas.length * lineH + sep + boxH + sep + 32 + notas.length * notaH + sep + footerH + 32);
 
   var canvas = document.createElement('canvas');
-  canvas.width  = W;
-  canvas.height = H;
+  canvas.width = W; canvas.height = H;
   var ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
 
   var y = 56;
-
-  // Marca
-  ctx.fillStyle = C_DARK;
-  ctx.font = 'bold 32px Arial, sans-serif';
+  ctx.fillStyle = C_DARK; ctx.font = 'bold 32px Arial, sans-serif';
   ctx.fillText('Belgrano Home', padX, y + 28);
   var now = new Date();
-  var fecha = now.toLocaleDateString('es-AR', {day:'2-digit', month:'2-digit', year:'numeric'}).replace(/\//g,' / ');
+  var fecha = now.toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,' / ');
   ctx.font = '13px Arial, sans-serif'; ctx.fillStyle = C_MID;
   var fw = ctx.measureText(fecha).width;
   ctx.fillText(fecha, W - padX - fw, y + 10);
   y += 60 + sep;
 
-  // Título sección
   ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
   ctx.fillText('RESUMEN DEL ENVÍO', padX, y);
   y += 20;
@@ -563,11 +809,9 @@ function solicitarEnvio() {
   ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
   y += sep;
 
-  // Filas
-  todasFilas.forEach(function(row, i) {
+  filas.forEach(function(row, i) {
     var bg = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, y - 8, W, lineH);
+    ctx.fillStyle = bg; ctx.fillRect(0, y - 8, W, lineH);
     ctx.font = '15px Arial, sans-serif'; ctx.fillStyle = C_MID;
     ctx.fillText(row[0], padX, y + 18);
     ctx.font = 'bold 20px Arial, sans-serif'; ctx.fillStyle = C_DARK;
@@ -579,9 +823,7 @@ function solicitarEnvio() {
   });
   y += sep;
 
-  // Caja total
-  ctx.fillStyle = C_BOX;
-  ctx.fillRect(padX, y, W - padX * 2, boxH);
+  ctx.fillStyle = C_BOX; ctx.fillRect(padX, y, W - padX * 2, boxH);
   ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
   var lt = 'TOTAL A ABONAR :'; var ltw = ctx.measureText(lt).width;
   ctx.fillText(lt, (W - ltw) / 2, y + 22);
@@ -590,10 +832,8 @@ function solicitarEnvio() {
   ctx.fillText(total, (W - tw) / 2, y + 74);
   y += boxH + sep;
 
-  // Importante
   ctx.font = 'bold 11px Arial, sans-serif'; ctx.fillStyle = C_MID;
-  ctx.fillText('IMPORTANTE', padX, y);
-  y += 20;
+  ctx.fillText('IMPORTANTE', padX, y); y += 20;
   ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
   y += 14;
@@ -602,60 +842,41 @@ function solicitarEnvio() {
     ctx.beginPath(); ctx.arc(padX + 7, y + 8, 7, 0, Math.PI * 2); ctx.stroke();
     ctx.font = '11px Arial, sans-serif'; ctx.fillStyle = C_MID;
     ctx.fillText('✓', padX + 3, y + 12);
-    ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
+    ctx.font = '14px Arial, sans-serif';
     ctx.fillText(nota, padX + 22, y + 12);
     y += notaH;
   });
   y += sep;
 
-  // Footer
   ctx.strokeStyle = C_LINE; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(padX, y); ctx.lineTo(W - padX, y); ctx.stroke();
   y += 18;
-  ctx.strokeStyle = C_LIGHT; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.arc(padX + 7, y + 7, 7, 0, Math.PI * 2); ctx.stroke();
   ctx.font = '14px Arial, sans-serif'; ctx.fillStyle = C_MID;
   ctx.fillText('belgranohome.com.ar', padX + 20, y + 2);
   var waFooter = 'WhatsApp: 11 3359-5571';
   var wfw = ctx.measureText(waFooter).width;
   ctx.fillText(waFooter, W - padX - wfw, y + 2);
 
-  // ── DESCARGAR JPG ──────────────────────────────────
   var link = document.createElement('a');
   link.download = 'cotizacion-envio-belgrano-home.jpg';
   link.href = canvas.toDataURL('image/jpeg', 0.97);
   link.click();
 
-  // ── WHATSAPP ────────────────────────────────────────
-  var zonaMsg = isExpreso ? 'Interior - Envío con Expreso' : 'CABA / GBA';
-  var msg = '*Cotización del Envío*\n';
-  msg += zonaMsg + '\n\n';
+  // WhatsApp
+  var zonaMsg = zona === 'interior' ? 'Interior — Envío por Expreso' : 'CABA / GBA';
+  var msg = '*Cotización del Envío*\n' + zonaMsg + '\n\n';
   msg += 'Resumen del Envío\n';
-  if (!isExpreso) {
-    datosSrv.forEach(function(r){ msg += r[0] + ': ' + r[1] + '\n'; });
-    resumenEco.forEach(function(r){ msg += r[0] + ': ' + r[1] + '\n'; });
-    if (notasPeaje) msg += 'Peajes: No incluidos\n';
-    msg += '\nTotal a abonar: ' + total;
-  } else {
-    var compraRaw2 = document.getElementById('compra-input').value.replace(/\./g,'').replace('$ ','').replace(',','.');
-    var compraVal2 = parseFloat(compraRaw2) || 0;
-    var flete2 = calcEnvio(FLETE_DEPOSITO, expQty);
-    var emb2 = compraVal2 > 0 ? compraVal2 * 0.10 : 0;
-    msg += 'Cantidad de muebles: ' + expQty + '\n';
-    msg += 'Flete hasta el expreso: ' + fmt(flete2) + '\n';
-    if (emb2 > 0) msg += 'Embalaje y Garantía: ' + fmt(emb2) + '\n';
-    msg += 'Costo del expreso: NO incluido\n';
-    msg += '\nTotal a abonar: ' + total;
-  }
+  filas.forEach(function(r) { msg += r[0] + ': ' + r[1] + '\n'; });
+  msg += '\nTotal a abonar: ' + total;
 
   var waURL = 'https://wa.me/541133595571?text=' + encodeURIComponent(msg);
-  setTimeout(function(){ window.open(waURL, '_blank'); }, 700);
+  setTimeout(function() { window.open(waURL, '_blank'); }, 700);
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// INIT
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 buildInstallGrid();
-renderCabaGba();
-renderExpreso();
 </script>
 </body>
 </html>
-
