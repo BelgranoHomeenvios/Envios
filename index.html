@@ -117,9 +117,9 @@
 
   <!-- PASO 1: Localidad -->
   <div class="step" id="step-loc">
-    <div class="step-title">📍 Contanos dónde vivís</div>
+    <div class="step-title">Contanos dónde vivís</div>
     <div class="search-wrap">
-      <input type="text" id="loc-input" placeholder="Escribí tu barrio o ciudad..." autocomplete="off" />
+      <input type="text" id="loc-input" placeholder="¿A dónde sería el envío?" autocomplete="off" />
       <div class="dropdown" id="loc-dropdown"></div>
     </div>
     <div id="zona-badge-wrap"></div>
@@ -686,7 +686,7 @@ function renderResultado() {
     html += `<div class="result-row"><span class="result-label">Costo del expreso</span><span class="result-val muted">A coordinar</span></div>`;
     html += `<div class="result-row total"><span>Subtotal (sin expreso)</span><span class="result-val">${fmt(total)}</span></div>`;
     html += `</div>`;
-    html += `<p class="info-note" style="color:#555">El envío se abona cuando está listo el pedido.</p>`;
+    html += `<p class="info-note" style="color:#555">El envío se abona cuando está listo el pedido. El valor se congela el día que realizás la compra.</p>`;
     html += `<button class="bh-btn" onclick="solicitarEnvio()">Solicitar envío</button>`;
     el.innerHTML = html;
 
@@ -696,10 +696,11 @@ function renderResultado() {
     const esGBA = zona === 'gba';
 
     let escaleraTot = 0;
+    let _pisos = 1, _muebles = 1;
     if (subida === 'escalera') {
-      const pisos    = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
-      const muebles  = Math.max(1, parseInt(document.getElementById('muebles-input').value)||1);
-      escaleraTot = 4000 * pisos * muebles;
+      _pisos    = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
+      _muebles  = Math.max(1, parseInt(document.getElementById('muebles-input').value)||1);
+      escaleraTot = 4000 * _pisos * _muebles;
     }
 
     let installTot = 0, installLines = [];
@@ -713,8 +714,7 @@ function renderResultado() {
     let html = `<div class="result-card">`;
     html += `<div class="result-row"><span class="result-label">Envío a ${capLoc(selectedLoc)}</span><span class="result-val">${fmt(base)}</span></div>`;
     if (escaleraTot > 0) {
-      const pisos = Math.max(1, parseInt(document.getElementById('pisos-input').value)||1);
-      html += `<div class="result-row"><span class="result-label">Adicional escalera (${pisos} ${pisos===1?'piso':'pisos'} × ${muebles} ${muebles===1?'mueble':'muebles'})</span><span class="result-val">${fmt(escaleraTot)}</span></div>`;
+      html += `<div class="result-row"><span class="result-label">Adicional escalera (${_pisos} ${_pisos===1?'piso':'pisos'} × ${_muebles} ${_muebles===1?'mueble':'muebles'})</span><span class="result-val">${fmt(escaleraTot)}</span></div>`;
     }
     installLines.forEach(l => {
       html += `<div class="result-row"><span class="result-label">${l.name} × ${l.q}</span><span class="result-val">${fmt(l.sub)}</span></div>`;
@@ -843,7 +843,22 @@ function solicitarEnvio() {
     ctx.font = '11px Arial, sans-serif'; ctx.fillStyle = C_MID;
     ctx.fillText('✓', padX + 3, y + 12);
     ctx.font = '14px Arial, sans-serif';
-    ctx.fillText(nota, padX + 22, y + 12);
+    // Multiline para notas largas
+    var maxW = W - padX * 2 - 22;
+    var words = nota.split(' ');
+    var line = '';
+    var lineY = y + 12;
+    words.forEach(function(word) {
+      var test = line + (line ? ' ' : '') + word;
+      if (ctx.measureText(test).width > maxW && line) {
+        ctx.fillText(line, padX + 22, lineY);
+        line = word;
+        lineY += 18;
+      } else {
+        line = test;
+      }
+    });
+    ctx.fillText(line, padX + 22, lineY);
     y += notaH;
   });
   y += sep;
