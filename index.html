@@ -419,7 +419,7 @@ function getZona(loc) {
   if (CABA_BARRIOS.has(loc)) return 'caba';
   if (GBA_LOCALIDADES.has(loc)) return 'gba';
   if (loc in LOCALIDADES) return 'interior';
-  return 'interior';
+  return 'unknown';
 }
 
 const INSTALACIONES = [
@@ -507,15 +507,20 @@ function showDropdown(results) {
   dropdown.classList.add('open');
 }
 
-// Si el usuario escribe algo que no está en la lista → zona = interior
+// Si el usuario escribe algo que no está en la lista → mostrar cartel "a cotizar"
 function tryInterior(q) {
   const uq = q.toUpperCase().trim();
   if (!uq) return;
-  // Si no matchea ninguna localidad conocida, aceptar como interior
+  // Solo aceptar si está exactamente en la lista
   const matches = Object.keys(LOCALIDADES).filter(k => k === uq);
   if (matches.length === 0 && uq.length >= 3) {
     selectedLoc = uq;
-    onLocSelected();
+    zona = 'unknown';
+    document.getElementById('zona-badge-wrap').innerHTML = `<div class="zona-badge" style="background:#fff5f5;color:#b91c1c;border:1px solid #fecaca;font-size:13px;font-weight:500;margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;">⚠️ Localidad no registrada — consultanos para cotizar</div>`;
+    document.getElementById('step-subida').style.display = 'none';
+    document.getElementById('step-interior').style.display = 'none';
+    document.getElementById('step-inst').style.display = 'none';
+    document.getElementById('result-wrap').style.display = 'none';
     dropdown.classList.remove('open');
   }
 }
@@ -571,6 +576,15 @@ function resetSteps() {
 function onLocSelected() {
   if (!selectedLoc) return;
   zona = getZona(selectedLoc);
+
+  if (zona === 'unknown') {
+    document.getElementById('zona-badge-wrap').innerHTML = `<div class="zona-badge" style="background:#fff5f5;color:#b91c1c;border:1px solid #fecaca;font-size:13px;font-weight:500;margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;">⚠️ Localidad no registrada — consultanos para cotizar</div>`;
+    document.getElementById('step-subida').style.display = 'none';
+    document.getElementById('step-interior').style.display = 'none';
+    document.getElementById('step-inst').style.display = 'none';
+    document.getElementById('result-wrap').style.display = 'none';
+    return;
+  }
 
   // Badge zona
   document.getElementById('zona-badge-wrap').innerHTML = zonaBadge(zona, selectedLoc);
