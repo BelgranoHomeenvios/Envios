@@ -520,7 +520,10 @@ function tryInterior(q) {
     document.getElementById('step-subida').style.display = 'none';
     document.getElementById('step-interior').style.display = 'none';
     document.getElementById('step-inst').style.display = 'none';
-    document.getElementById('result-wrap').style.display = 'none';
+    document.getElementById('result-wrap').style.display = '';
+    var locNombre2 = uq.charAt(0) + uq.slice(1).toLowerCase();
+    var waMsg2 = 'Hola! Quisiera consultar el costo de envío a ' + locNombre2 + '. ¿Me pueden cotizar?';
+    document.getElementById('result-area').innerHTML = '<div class="info-box" style="background:#fff5f5;border-color:#fecaca;color:#b91c1c;">Tu localidad no está en nuestra lista de tarifas fijas. Escribinos y te cotizamos el envío a la brevedad.</div><a href="https://wa.me/541133595571?text=' + encodeURIComponent(waMsg2) + '" target="_blank" style="text-decoration:none;"><button class="bh-btn" style="background:#25d366;margin-top:12px;">💬 Consultar por WhatsApp</button></a>';
     dropdown.classList.remove('open');
   }
 }
@@ -582,7 +585,10 @@ function onLocSelected() {
     document.getElementById('step-subida').style.display = 'none';
     document.getElementById('step-interior').style.display = 'none';
     document.getElementById('step-inst').style.display = 'none';
-    document.getElementById('result-wrap').style.display = 'none';
+    document.getElementById('result-wrap').style.display = '';
+    var locNombre = selectedLoc.charAt(0) + selectedLoc.slice(1).toLowerCase();
+    var waMsg = 'Hola! Quisiera consultar el costo de envío a ' + locNombre + '. ¿Me pueden cotizar?';
+    document.getElementById('result-area').innerHTML = '<div class="info-box" style="background:#fff5f5;border-color:#fecaca;color:#b91c1c;">Tu localidad no está en nuestra lista de tarifas fijas. Escribinos y te cotizamos el envío a la brevedad.</div><a href="https://wa.me/541133595571?text=' + encodeURIComponent(waMsg) + '" target="_blank" style="text-decoration:none;"><button class="bh-btn" style="background:#25d366;margin-top:12px;">💬 Consultar por WhatsApp</button></a>';
     return;
   }
 
